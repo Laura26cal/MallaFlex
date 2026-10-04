@@ -6,7 +6,7 @@ Proyecto de Ingeniería de Software I, UNAL 2026-II.
 
 ## Tecnologías
 
-Java 23 y SQLite.
+Java 21 y SQLite.
 
 ## Equipo
 
