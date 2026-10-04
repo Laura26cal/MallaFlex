@@ -6,7 +6,7 @@ Proyecto de Ingeniería de Software I, UNAL 2026-II.
 
 ## Tecnologías
 
-Java 21, Spring Boot, Thymeleaf y SQLite.
+Java 23 y SQLite.
 
 ## Equipo
 
