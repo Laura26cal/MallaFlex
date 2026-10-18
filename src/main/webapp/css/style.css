@@ -310,3 +310,112 @@ td.nota {
     background: #fcdde2;
     color: #c8334f;
 }
+
+.card.aviso p {
+    margin-bottom: 20px;
+}
+
+.leyenda {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.leyenda-items {
+    display: flex;
+    gap: 24px;
+}
+.resumen {
+    font-weight: bold;
+}
+.cuadro {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.cuadro.aprobada {
+    background: #dff0e0;
+    border: 1px solid #b7dbb9;
+}
+
+.cuadro.encurso {
+    background: #fcdde2;
+    border: 1px solid #f5b8c2;
+}
+
+.cuadro.perdida {
+    background: #fdeccb;
+    border: 1px solid #f3d899;
+}
+
+.cuadro.desbloqueada {
+    background: white;
+    border: 2px solid #c8334f;
+}
+
+.cuadro.bloqueada {
+    background: #e8e8e5;
+    border: 1px solid #d5d5d2;
+}
+
+.semestre {
+    background: #eeeeec;
+    border-radius: 20px;
+    padding: 20px;
+    flex: 1;
+    min-width: 0;
+}
+
+.semestre h3 {
+    text-align: center;
+    font-size: 20px;
+}
+
+.materia {
+    border-radius: 14px;
+    padding: 16px;
+    margin-top: 14px;
+}
+
+.materia.aprobada {
+    background: #dff0e0;
+    border: 1px solid #b7dbb9;
+    color: #2b7a4b;
+}
+
+.materia h4 {
+    font-size: 17px;
+    margin-bottom: 6px;
+}
+
+.materia p {
+    font-size: 15px;
+}
+
+.semestres {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+.materia.encurso {
+    background: #fcdde2;
+    border: 1px solid #f5b8c2;
+    color: #c8334f;
+}
+
+.materia.bloqueada {
+    background: #e8e8e5;
+    border: 1px solid #d5d5d2;
+    color: #666;
+}
+
+.materia.desbloqueada {
+    background: white;
+    border: 2px solid #c8334f;
+    color: #222;
+    padding: 15px;
+}
