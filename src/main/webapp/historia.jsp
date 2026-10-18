@@ -1,0 +1,129 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>MallaFlex - Historia académica</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <h1>Malla<span>Flex</span></h1>
+            <nav>
+                <a href="index.jsp">Inicio</a>
+                <a href="ruta.jsp">Ruta óptima</a>
+                <a href="malla.jsp">Malla curricular</a>
+                <a href="historia.jsp" class="activo">Historia académica</a>
+            </nav>
+        </aside>
+        
+        
+        <main class="contenido">
+            <h2 class="titulo">Historia académica</h2>
+            <p class="sub">Registra tus materias con nota y matrícula.</p>
+            <div class="grid">
+                <div class="card">
+                    <p>P.A.P.A.</p>
+                    <h2>4.2</h2>
+                </div>
+                <div class="card">
+                    <p>Materias registradas</p>
+                    <h2>4</h2>
+                </div>
+                <div class="card">
+                    <p>Créditos aprobados (en esta lista)</p>
+                    <h2 class="verde">14</h2>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Registrar materia cursada</h3>
+                <form>
+                    <div class="campo ancho">
+                        <label>Materia</label>
+                        <input type="text" placeholder="Ej: Cálculo integral">
+                    </div>
+
+                    <div class="campo">
+                        <label>Nota (0.0 a 5.0)</label>
+                        <input type="number" step="0.1" min="0" max="5" placeholder="3.8">
+                    </div>
+
+                    <div class="campo">
+                        <label>Matrícula n.º</label>
+                        <input type="number" min="1" placeholder="1">
+                    </div>
+
+                    <button type="submit">Guardar</button>
+                </form>
+                <div class="card tabla historia">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Asignatura</th>
+                                <th>Créditos</th>
+                                <th>Periodo</th>
+                                <th>Matrícula</th>
+                                <th>Nota</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Cálculo en varias variables (1000006-B)</td>
+                                <td>4</td>
+                                <td>2026-1S</td>
+                                <td>1</td>
+                                <td class="nota">3.5</td>
+                                <td><span class="etiqueta aprobada">Aprobada</span></td>
+                            </tr>
+                            <tr>
+                                <td>Ingeniería económica (2015703)</td>
+                                <td>3</td>
+                                <td>2026-1S</td>
+                                <td>1</td>
+                                <td class="nota">3.9</td>
+                                <td><span class="etiqueta aprobada">Aprobada</span></td>
+                            </tr>
+                            <tr>
+                                <td>Cálculo diferencial</td>
+                                <td>4</td>
+                                <td>2025-1S</td>
+                                <td>2</td>
+                                <td class="nota">2.9</td>
+                                <td><span class="etiqueta reprobada">Reprobada</span></td>
+                            </tr>
+                            <tr>
+                                <td>Programación de computadores</td>
+                                <td>3</td>
+                                <td>2025-1S</td>
+                                <td>1</td>
+                                <td class="nota">4.3</td>
+                                <td><span class="etiqueta aprobada">Aprobada</span></td>
+                            </tr>
+                            <tr>
+                                <td>Álgebra lineal</td>
+                                <td>4</td>
+                                <td>2025-2S</td>
+                                <td>1</td>
+                                <td class="nota">2.1</td>
+                                <td><span class="etiqueta reprobada">Reprobada</span></td>
+                            </tr>
+                        </tbody>
+                        
+                        
+                    </table>
+                </div>
+                
+                
+                
+            </div>
+            
+            
+        </main>
+
+    </div>
+
+</body>
+</html>

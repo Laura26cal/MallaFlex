@@ -1,7 +1,6 @@
-/* 
-    Created on : 17/10/2026, 7:48:54 p. m.
-    Author     : Laura26cal
-*/
+* {
+    box-sizing: border-box;
+}
 
 /* Formato de las tarjetas del inicio */
 .card {
@@ -84,6 +83,7 @@
 
 .card h2 {
     font-size: 56px;
+    margin-top: 0;
     margin-bottom: 0;
 }
 
@@ -226,4 +226,87 @@ nav a.activo {
 .fila-progreso h2 {
     margin: 0;
     line-height: 1;
+}
+
+.sub {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.contenido h2.titulo {
+    margin-bottom: 6px;
+}
+
+form {
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+}
+
+.campo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.campo.ancho {
+    flex: 3;
+}
+
+input {
+    padding: 14px 18px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 16px;
+    width: 100%;
+}
+
+label {
+    color: #666;
+    margin-bottom: 8px;
+}
+
+form button {
+    background: #c8334f;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+form button:hover {
+    background: #a82a42;
+}
+
+.card.tabla {
+    margin-top: 20px;
+}
+
+.card.historia th,
+.card.historia td {
+    text-align: left;
+}
+
+td.nota {
+    font-weight: bold;
+}
+
+.etiqueta {
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 15px;
+}
+
+.etiqueta.aprobada {
+    background: #dff0e0;
+    color: #2b7a4b;
+}
+
+.etiqueta.reprobada {
+    background: #fcdde2;
+    color: #c8334f;
 }

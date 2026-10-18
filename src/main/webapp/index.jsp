@@ -1,9 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : 22/09/2026, 7:42:14 p. m.
-    Author     : Laura26cal
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,9 +12,9 @@
             <h1>Malla<span>Flex</span></h1>
             <nav>
                 <a href="#" class="activo">Inicio</a>
-                <a href="#">Ruta óptima</a>
-                <a href="#">Malla curricular</a>
-                <a href="#">Historia académica</a>
+                <a href="ruta.jsp">Ruta óptima</a>
+                <a href="malla.jsp">Malla curricular</a>
+                <a href="historia.jsp">Historia académica</a>
             </nav>
         </aside>
         
