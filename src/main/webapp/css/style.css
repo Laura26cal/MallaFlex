@@ -1,9 +1,229 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
-*/
 /* 
     Created on : 17/10/2026, 7:48:54 p. m.
-    Author     : sofit
+    Author     : Laura26cal
 */
 
+/* Formato de las tarjetas del inicio */
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 10px 28px;
+    flex: 1;
+    border: 1px solid #eee;
+    
+}
+
+/* Formato de la tarjeta que genera las rutas */
+.card.rosa {
+    background: #fcdde2;
+    border: none;
+}
+
+.rosa h3 {
+    font-size: 20px;
+    margin-bottom: 6px;
+}
+
+.rosa {
+    flex: 2;
+}
+
+.rosa p {
+    color: #444;
+    margin-bottom: 0;
+}
+
+.rosa button {
+    background: #222;
+    color: white;
+    border: none;
+    padding: 15px 28px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 0px;
+}
+
+.ancha {
+    flex: 2;
+}
+
+/* Barra del avance de carrera */
+.barra {
+    height: 12px;
+    background: #e3e3e0;
+    border-radius: 10px;
+    flex: 1;
+}
+.barra-llena {
+    height: 100%;
+    width: 38%;
+    background: #c8334f;
+    border-radius: 10px;
+}
+
+.fila-progreso {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.fila-progreso .barra {
+    margin-top: 0;
+}
+
+/* Color de numero de materias en curso y aprobadas */
+.rojo {
+    color: #c8334f;
+}
+.verde {
+    color: #2b7a4b;
+}
+
+.card h2 {
+    font-size: 56px;
+    margin-bottom: 0;
+}
+
+.card p {
+    color: #666;
+    margin-bottom: 14px;
+}
+
+.contenido {
+    flex: 1;
+    padding: 5px 20px;
+}
+.contenido h2 {
+    font-size: 34px;
+    margin-bottom: 30px;
+}
+body {
+    background: #f5f5f3;
+    font-family: sans-serif;
+}
+
+/* Formato de las tarjetas la cuadricula */
+.grid {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.layout {
+    display: flex;
+}
+
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+/* Selector de carrera */
+.user {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user select {
+    padding: 14px 18px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background: white;
+    font-size: 16px;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #fcdde2;
+    color: #c8334f;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Formato de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px 12px;
+    border-bottom: 1px solid #eee;
+    text-align: right;
+}
+th {
+    color: #666;
+    font-weight: normal;
+}
+
+th:first-child, td:first-child {
+    text-align: left;
+}
+
+.tabla-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.tabla-header h3 {
+    font-size: 24px;
+}
+
+.tabla-header a {
+    color: #c8334f;
+}
+
+td.verde {
+    font-weight: bold;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* ###Formato del menu de navegacion */
+.sidebar {
+    width: 240px;
+    border-right: 1px solid #e3e3e0;
+    padding: 10px 20px;
+}
+
+
+
+.sidebar h1 span {
+    color: #c8334f;
+}
+
+nav a {
+    display: block;
+    text-decoration: none;
+    color: #666;
+    padding: 14px 18px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    
+}
+
+nav a.activo {
+    background: #fcdde2;
+    color: #222;
+    font-weight: bold;
+}
+
+
+/* Formato de la barra del avance de la carrera*/
+.fila-progreso h2 {
+    margin: 0;
+    line-height: 1;
+}
