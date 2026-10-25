@@ -22,6 +22,8 @@
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <start-class>com.mallaflex.MallaFlexApplication</start-class>
+        <!-- Versión del driver de SQLite: se puede subir cuando salga una nueva -->
+        <sqlite-jdbc.version>3.53.4.0</sqlite-jdbc.version>
     </properties>
 
     <dependencies>
@@ -37,16 +39,17 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-        <!-- Acceso a datos -->
+        <!-- Acceso a datos con JDBC: JdbcTemplate + pool de conexiones (Hikari) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
 
-        <!-- Base de datos relacional embebida en archivo -->
+        <!-- Base de datos relacional embebida en un solo archivo (SQLite) -->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>${sqlite-jdbc.version}</version>
             <scope>runtime</scope>
         </dependency>
 
