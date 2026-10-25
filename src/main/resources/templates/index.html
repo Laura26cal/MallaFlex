@@ -1,23 +1,22 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>MallaFlex</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <div class="layout">
         <aside class="sidebar">
             <h1>Malla<span>Flex</span></h1>
             <nav>
-                <a href="#" class="activo">Inicio</a>
-                <a href="ruta.jsp">Ruta óptima</a>
-                <a href="malla.jsp">Malla curricular</a>
-                <a href="historia.jsp">Historia académica</a>
+                <a th:href="@{/}" class="activo">Inicio</a>
+                <a th:href="@{/ruta}">Ruta óptima</a>
+                <a th:href="@{/malla}">Malla curricular</a>
+                <a th:href="@{/historia}">Historia académica</a>
             </nav>
         </aside>
-        
+
         <main class="contenido">
 
             <header class="top">
@@ -30,9 +29,9 @@
                     <div class="avatar">L</div>
                 </div>
             </header>
-        
+
             <div class="grid">
-                
+
                 <div class="card ancha">
                     <p>Progreso de la carrera</p>
 
@@ -68,15 +67,15 @@
                 <div class="card rosa">
                     <h3>Semestre estimado de graduación</h3>
                     <p>Genera tu ruta para calcularlo</p>
-                    <button>Generar ruta óptima</button>
+                    <button type="button" onclick="location.href='/ruta'">Generar ruta óptima</button>
                 </div>
             </div>
-            
-            
+
+
             <div class="card tabla">
                 <div class="tabla-header">
                     <h3>Créditos por tipología</h3>
-                    <a href="#">Ver historia académica</a>
+                    <a th:href="@{/historia}">Ver historia académica</a>
                 </div>
                 <table>
                     <thead>
@@ -128,8 +127,7 @@
                 </table>
             </div>
 
-            
-        </main>            
-    </div>  
+        </main>
+    </div>
 </body>
 </html>

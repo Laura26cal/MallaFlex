@@ -1,10 +1,9 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>MallaFlex - Malla curricular</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
@@ -14,10 +13,10 @@
             <h1>Malla<span>Flex</span></h1>
 
             <nav>
-                <a href="index.jsp">Inicio</a>
-                <a href="ruta.jsp">Ruta óptima</a>
-                <a href="malla.jsp" class="activo">Malla curricular</a>
-                <a href="historia.jsp">Historia académica</a>
+                <a th:href="@{/}">Inicio</a>
+                <a th:href="@{/ruta}">Ruta óptima</a>
+                <a th:href="@{/malla}" class="activo">Malla curricular</a>
+                <a th:href="@{/historia}">Historia académica</a>
             </nav>
         </aside>
 
@@ -37,7 +36,7 @@
                 </div>
                 <p class="resumen">18 aprobadas · 5 en curso · 0 perdidas</p>
             </div>
-            
+
             <div class="semestres">
                 <div class="semestre">
                     <h3>Semestre 1</h3>
@@ -49,50 +48,42 @@
                         <h4>Programación de computadores</h4>
                         <p>3 cr. · Aprobada</p>
                     </div>
-
                     <div class="materia aprobada">
                         <h4>Introducción a la ingeniería de sistemas</h4>
                         <p>3 cr. · Aprobada</p>
                     </div>
-
                     <div class="materia aprobada">
                         <h4>Pensamiento sistémico</h4>
                         <p>3 cr. · Aprobada</p>
                     </div>
-
                     <div class="materia aprobada">
                         <h4>Cátedra de inducción</h4>
                         <p>2 cr. · Aprobada</p>
                     </div>
                 </div>
-                
+
                 <div class="semestre">
                     <h3>Semestre 2</h3>
-
                     <div class="materia aprobada">
                         <h4>Cálculo integral</h4>
                         <p>4 cr. · Aprobada</p>
                     </div>
-
                     <div class="materia aprobada">
                         <h4>Álgebra lineal</h4>
                         <p>4 cr. · Aprobada</p>
                     </div>
-                    
                     <div class="materia aprobada">
                         <h4>Programación orientada a objetos</h4>
                         <p>3 cr. · Aprobada</p>
                     </div>
-
                     <div class="materia aprobada">
                         <h4>Fundamentos de mecánica</h4>
                         <p>4 cr. · Aprobada</p>
                     </div>
                 </div>
-                
+
                 <div class="semestre">
                     <h3>Semestre 3</h3>
-
                     <div class="materia aprobada">
                         <h4>Cálculo en varias variables</h4>
                         <p>4 cr. · Aprobada</p>
@@ -117,7 +108,6 @@
 
                 <div class="semestre">
                     <h3>Semestre 4</h3>
-
                     <div class="materia aprobada">
                         <h4>Probabilidad y estadística</h4>
                         <p>3 cr. · Aprobada</p>
@@ -139,10 +129,9 @@
                         <p>3 cr. · En curso</p>
                     </div>
                 </div>
-                
+
                 <div class="semestre">
                     <h3>Semestre 5</h3>
-
                     <div class="materia encurso">
                         <h4>Modelos y simulación</h4>
                         <p>3 cr. · En curso</p>
@@ -167,7 +156,6 @@
 
                 <div class="semestre">
                     <h3>Semestre 6</h3>
-
                     <div class="materia bloqueada">
                         <h4>Optimización</h4>
                         <p>3 cr. · Bloqueada</p>
@@ -193,10 +181,9 @@
                         <p>4 cr. · Bloqueada</p>
                     </div>
                 </div>
-                
+
             </div>
-            
-            
+
         </main>
 
     </div>

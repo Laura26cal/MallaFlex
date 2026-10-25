@@ -1,24 +1,23 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>MallaFlex - Historia académica</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <div class="layout">
         <aside class="sidebar">
             <h1>Malla<span>Flex</span></h1>
             <nav>
-                <a href="index.jsp">Inicio</a>
-                <a href="ruta.jsp">Ruta óptima</a>
-                <a href="malla.jsp">Malla curricular</a>
-                <a href="historia.jsp" class="activo">Historia académica</a>
+                <a th:href="@{/}">Inicio</a>
+                <a th:href="@{/ruta}">Ruta óptima</a>
+                <a th:href="@{/malla}">Malla curricular</a>
+                <a th:href="@{/historia}" class="activo">Historia académica</a>
             </nav>
         </aside>
-        
-        
+
+
         <main class="contenido">
             <h2 class="titulo">Historia académica</h2>
             <p class="sub">Registra tus materias con nota y matrícula.</p>
@@ -36,10 +35,10 @@
                     <h2 class="verde">14</h2>
                 </div>
             </div>
-            
+
             <div class="card">
                 <h3>Registrar materia cursada</h3>
-                <form>
+                <form onsubmit="return false;">
                     <div class="campo ancho">
                         <label>Materia</label>
                         <input type="text" placeholder="Ej: Cálculo integral">
@@ -111,19 +110,11 @@
                                 <td><span class="etiqueta reprobada">Reprobada</span></td>
                             </tr>
                         </tbody>
-                        
-                        
                     </table>
                 </div>
-                
-                
-                
             </div>
-            
-            
+
         </main>
-
     </div>
-
 </body>
 </html>
