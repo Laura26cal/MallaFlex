@@ -1,0 +1,7 @@
+
+CREATE TABLE materia (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    codigo VARCHAR(20) NOT NULL UNIQUE,
+    nombre VARCHAR(150) NOT NULL,
+    creditos INT NOT NULL
+);
