@@ -4,6 +4,7 @@ import com.mallaflex.entity.Materia;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,4 +32,19 @@ public class MateriaOpcionRepository {
         """;
         return jdbcTemplate.query(sql, materiaRowMapper, materiaCodigo);
     }
+
+    // cambiar las opciones de una materia
+    @Transactional
+    public void replaceOpciones(String materiaCodigo, List<String> opciones) {
+        jdbcTemplate.update("DELETE FROM materia_opcion WHERE materia_codigo = ?", materiaCodigo);
+        List<Object[]> filas = opciones.stream()
+                .distinct()
+                .map(o -> new Object[]{materiaCodigo, o})
+                .toList();
+        if (!filas.isEmpty()) {
+            jdbcTemplate.batchUpdate(
+                    "INSERT INTO materia_opcion (materia_codigo, opcion_codigo) VALUES (?, ?)", filas);
+        }
+    }
+
 }
