@@ -101,9 +101,7 @@ public class MateriaRepository {
         }
     }
 
-    // ---- Fase 2 (administración): consultas que necesita la validación ----
-
-    /** Todo el grafo de prerrequisitos: materia -> lista de sus requisitos. */
+    // grafo de prerrequisitos: materia -> sus requisitos
     public Map<String, List<String>> findGrafoPrerrequisitos() {
         Map<String, List<String>> grafo = new HashMap<>();
         jdbcTemplate.query("SELECT materia_codigo, requisito_codigo FROM prerrequisito",
@@ -113,7 +111,7 @@ public class MateriaRepository {
         return grafo;
     }
 
-    /** Códigos de las materias que tienen a {@code requisitoCodigo} como prerrequisito. */
+    // materias que tienen a este como prerrequisito
     public List<String> findMateriasQueRequieren(String requisitoCodigo) {
         String sql = "SELECT materia_codigo FROM prerrequisito WHERE requisito_codigo = ?";
         return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("materia_codigo"), requisitoCodigo);

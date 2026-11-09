@@ -19,10 +19,6 @@ import com.mallaflex.repository.MallaRepository;
 import com.mallaflex.repository.MateriaOpcionRepository;
 import com.mallaflex.repository.MateriaRepository;
 
-/**
- * Administración del catálogo (FR-03). Cada operación valida primero y escribe después;
- * si algo falla, @Transactional deshace todo lo escrito en esa operación.
- */
 @Service
 @Transactional
 public class CatalogoAdminService implements ICatalogoAdmin {
@@ -33,7 +29,7 @@ public class CatalogoAdminService implements ICatalogoAdmin {
     private final MateriaOpcionRepository materiaOpcionRepository;
     private final HistoriaAcademicaRepository historiaAcademicaRepository;
 
-    // Lógica pura y sin estado: no necesita ser un bean de Spring
+    // logica pura, sin estado
     private final ValidadorPrerrequisitos validadorPrerrequisitos = new ValidadorPrerrequisitos();
 
     public CatalogoAdminService(CarreraRepository carreraRepository,
@@ -48,9 +44,7 @@ public class CatalogoAdminService implements ICatalogoAdmin {
         this.historiaAcademicaRepository = historiaAcademicaRepository;
     }
 
-    // =====================================================================
-    // Carreras
-    // =====================================================================
+    // carreras
 
     @Override
     public Carrera crearCarrera(Carrera carrera) {
@@ -76,15 +70,13 @@ public class CatalogoAdminService implements ICatalogoAdmin {
         carreraRepository.delete(codigo);
     }
 
-    // =====================================================================
-    // Materias
-    // =====================================================================
+    // materias
 
     @Override
     public Materia crearMateria(Materia materia, List<String> prerrequisitos, List<String> correquisitos) {
         Materia limpia = validarDatosMateria(materia);
 
-        // Código único
+        // codigo unico
         if (materiaRepository.existsByCodigo(limpia.codigo())) {
             throw new ReglaNegocioException("Ya existe una materia con el código " + limpia.codigo() + ".");
         }
@@ -94,7 +86,7 @@ public class CatalogoAdminService implements ICatalogoAdmin {
         validarPrerrequisitos(limpia.codigo(), pre);
         validarCorrequisitos(limpia.codigo(), co);
 
-        // Todo validado: ahora sí se escribe
+        // ya validado, se guarda
         materiaRepository.save(limpia);
         if (!pre.isEmpty()) {
             materiaRepository.replacePrerrequisitos(limpia.codigo(), pre);
@@ -118,14 +110,14 @@ public class CatalogoAdminService implements ICatalogoAdmin {
         Materia materia = obtenerMateriaOFallar(codigo);
         String nombre = etiquetaDe(materia);
 
-        // 1. No puede ser prerrequisito de otra materia
+        // no puede ser prerrequisito de otra
         List<String> dependientes = materiaRepository.findMateriasQueRequieren(codigo);
         if (!dependientes.isEmpty()) {
             throw new ReglaNegocioException("No se puede eliminar " + nombre
                     + ": es prerrequisito de " + etiquetas(dependientes) + ".");
         }
 
-        // 2. No puede estar en ninguna malla
+        // no puede estar en una malla
         List<Carrera> carreras = mallaRepository.findCarrerasByMateria(codigo);
         if (!carreras.isEmpty()) {
             String nombres = carreras.stream().map(Carrera::nombre).collect(Collectors.joining(", "));
@@ -133,7 +125,7 @@ public class CatalogoAdminService implements ICatalogoAdmin {
                     + ": está en la malla de " + nombres + ". Quítala de la malla primero.");
         }
 
-        // 3. No puede tener historia académica
+        // no puede tener historia academica
         if (historiaAcademicaRepository.existsByMateria(codigo)) {
             throw new ReglaNegocioException("No se puede eliminar " + nombre
                     + ": algún estudiante la tiene en su historia académica.");
@@ -173,9 +165,7 @@ public class CatalogoAdminService implements ICatalogoAdmin {
         materiaOpcionRepository.replaceOpciones(materiaCodigo, ops);
     }
 
-    // =====================================================================
-    // Malla
-    // =====================================================================
+    // malla
 
     @Override
     public void asignarMateriaACarrera(String carreraCodigo, String materiaCodigo, String tipologia,
@@ -183,13 +173,13 @@ public class CatalogoAdminService implements ICatalogoAdmin {
         Carrera carrera = obtenerCarreraOFallar(carreraCodigo);
         Materia materia = obtenerMateriaOFallar(materiaCodigo);
 
-        // No asignar dos veces la misma materia a una carrera
+        // no asignar dos veces la misma materia
         if (mallaRepository.existsMateriaEnCarrera(carreraCodigo, materiaCodigo)) {
             throw new ReglaNegocioException("La materia " + etiquetaDe(materia)
                     + " ya está asignada a la carrera " + carrera.nombre() + ".");
         }
 
-        // Semestre sugerido entre 1 y num_semestres (si se indica uno)
+        // semestre entre 1 y num_semestres
         if (semestreSugerido != null
                 && (semestreSugerido < 1 || semestreSugerido > carrera.numSemestres())) {
             throw new ReglaNegocioException("El semestre sugerido debe estar entre 1 y "
@@ -212,9 +202,7 @@ public class CatalogoAdminService implements ICatalogoAdmin {
         mallaRepository.removeMateria(carreraCodigo, materiaCodigo);
     }
 
-    // =====================================================================
-    // Validaciones privadas
-    // =====================================================================
+    // validaciones
 
     private Carrera validarDatosCarrera(Carrera c) {
         if (c == null || esVacio(c.codigo())) {
@@ -253,10 +241,6 @@ public class CatalogoAdminService implements ICatalogoAdmin {
         return new Materia(m.codigo().trim(), m.nombre().trim(), m.creditos());
     }
 
-    /**
-     * Valida los prerrequisitos que se quieren guardar para una materia:
-     * no a sí misma, que existan, y que no formen ciclos.
-     */
     private void validarPrerrequisitos(String materiaCodigo, List<String> prerrequisitos) {
         for (String requisito : prerrequisitos) {
             if (requisito.equals(materiaCodigo)) {
@@ -287,9 +271,7 @@ public class CatalogoAdminService implements ICatalogoAdmin {
         }
     }
 
-    // =====================================================================
-    // Utilidades
-    // =====================================================================
+    // utilidades
 
     private Carrera obtenerCarreraOFallar(String codigo) {
         return carreraRepository.findById(codigo).orElseThrow(
@@ -301,7 +283,6 @@ public class CatalogoAdminService implements ICatalogoAdmin {
                 () -> new RecursoNoEncontradoException("La materia " + codigo + " no existe."));
     }
 
-    /** Quita nulos, espacios y repetidos; null se vuelve lista vacía. */
     private List<String> normalizar(List<String> codigos) {
         if (codigos == null) {
             return new ArrayList<>();
@@ -317,7 +298,6 @@ public class CatalogoAdminService implements ICatalogoAdmin {
         return texto == null || texto.isBlank();
     }
 
-    /** "Nombre (CODIGO)" para mensajes; si la materia no se encuentra, solo el código. */
     private String etiqueta(String codigo) {
         return materiaRepository.findById(codigo).map(this::etiquetaDe).orElse(codigo);
     }
