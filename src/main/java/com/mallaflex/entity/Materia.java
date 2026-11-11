@@ -1,4 +1,4 @@
-package com.mallaflex.model;
+package com.mallaflex.entity;
 
 public record Materia(
     String codigo,

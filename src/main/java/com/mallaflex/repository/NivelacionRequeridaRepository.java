@@ -1,6 +1,6 @@
 package com.mallaflex.repository;
 
-import com.mallaflex.model.NivelacionRequerida;
+import com.mallaflex.entity.NivelacionRequerida;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

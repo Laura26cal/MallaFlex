@@ -1,6 +1,6 @@
 package com.mallaflex.repository;
 
-import com.mallaflex.model.Parametro;
+import com.mallaflex.entity.Parametro;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;

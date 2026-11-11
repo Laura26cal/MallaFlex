@@ -1,6 +1,6 @@
 package com.mallaflex.repository;
 
-import com.mallaflex.model.LibreEleccion;
+import com.mallaflex.entity.LibreEleccion;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;

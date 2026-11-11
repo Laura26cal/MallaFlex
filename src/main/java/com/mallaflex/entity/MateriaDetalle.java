@@ -1,4 +1,4 @@
-package com.mallaflex.model;
+package com.mallaflex.entity;
 import java.util.List;
 
 public record MateriaDetalle(

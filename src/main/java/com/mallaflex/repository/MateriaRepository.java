@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mallaflex.model.Materia;
+import com.mallaflex.entity.Materia;
 
 
 @Repository

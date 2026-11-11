@@ -1,5 +1,5 @@
 package com.mallaflex.service;
-  import com.mallaflex.model.*;
+  import com.mallaflex.entity.*;
   import com.mallaflex.repository.*;
   import com.mallaflex.exception.RecursoNoEncontradoException;
   import java.util.List;
