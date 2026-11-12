@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mallaflex.exception.RecursoNoEncontradoException;
 import com.mallaflex.exception.ReglaNegocioException;
-import com.mallaflex.model.Carrera;
-import com.mallaflex.model.Materia;
+import com.mallaflex.entity.Carrera;
+import com.mallaflex.entity.Materia;
 import com.mallaflex.repository.CarreraRepository;
 import com.mallaflex.repository.HistoriaAcademicaRepository;
 import com.mallaflex.repository.MallaRepository;

@@ -2,8 +2,8 @@ package com.mallaflex.service;
 
 import java.util.List;
 
-import com.mallaflex.model.Carrera;
-import com.mallaflex.model.Materia;
+import com.mallaflex.entity.Carrera;
+import com.mallaflex.entity.Materia;
 
 public interface ICatalogoAdmin {
 
