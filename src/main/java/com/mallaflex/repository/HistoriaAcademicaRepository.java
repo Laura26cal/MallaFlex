@@ -41,4 +41,10 @@ public class HistoriaAcademicaRepository {
                 historia.estado()
         );
     }
+
+    public boolean existsByMateria(String materiaCodigo) {
+        String sql = "SELECT 1 FROM historia_academica WHERE materia_codigo = ? LIMIT 1";
+        return !jdbcTemplate.query(sql, (rs, rowNum) -> 1, materiaCodigo).isEmpty();
+    }
+
 }

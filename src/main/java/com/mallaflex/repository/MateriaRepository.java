@@ -1,9 +1,13 @@
 package com.mallaflex.repository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -95,6 +99,22 @@ public class MateriaRepository {
             jdbcTemplate.batchUpdate(
                     "INSERT INTO correquisito (materia_codigo, correquisito_codigo) VALUES (?, ?)", filas);
         }
+    }
+
+    // grafo de prerrequisitos: materia -> sus requisitos
+    public Map<String, List<String>> findGrafoPrerrequisitos() {
+        Map<String, List<String>> grafo = new HashMap<>();
+        jdbcTemplate.query("SELECT materia_codigo, requisito_codigo FROM prerrequisito",
+                (RowCallbackHandler) rs -> grafo
+                        .computeIfAbsent(rs.getString("materia_codigo"), k -> new ArrayList<>())
+                        .add(rs.getString("requisito_codigo")));
+        return grafo;
+    }
+
+    // materias que tienen a este como prerrequisito
+    public List<String> findMateriasQueRequieren(String requisitoCodigo) {
+        String sql = "SELECT materia_codigo FROM prerrequisito WHERE requisito_codigo = ?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("materia_codigo"), requisitoCodigo);
     }
 
 }
