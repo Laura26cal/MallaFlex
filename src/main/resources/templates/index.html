@@ -23,8 +23,11 @@
                 <h2>Así va tu progreso hasta hoy</h2>
 
                 <div class="user">
-                    <select>
-                        <option>272A - Ingeniería de Sistemas y Computación</option>
+                    <select onchange="location.href='/?carrera=' + this.value">
+                        <option th:each="c : ${carreras}"
+                                th:value="${c.codigo}"
+                                th:text="${c.codigo + ' - ' + c.nombre}"
+                                th:selected="${c.codigo == malla.carrera.codigo}">272A - Ingeniería</option>
                     </select>
                     <div class="avatar">L</div>
                 </div>
@@ -44,8 +47,8 @@
                 </div>
 
                 <div class="card">
-                    <p>Total de materias</p>
-                    <h2>60</h2>
+                    <p>Créditos de la malla</p>
+                    <h2 th:text="${malla.creditosMalla}">165</h2>
                 </div>
 
                 <div class="card">
