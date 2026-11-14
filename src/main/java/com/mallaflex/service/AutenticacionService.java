@@ -11,6 +11,7 @@ import javax.crypto.spec.PBEKeySpec;
 import org.springframework.stereotype.Service;
 
 import com.mallaflex.entity.Usuario;
+import com.mallaflex.exception.ReglaNegocioException;
 import com.mallaflex.repository.UsuarioRepository;
 
 @Service 
@@ -31,22 +32,22 @@ public class AutenticacionService {
 
     /**
      * @return 
-     * @throws IllegalArgumentException
+     * @throws ReglaNegocioException
      */
     public Usuario iniciarSesion(String correo, String password) {
         if (correo == null || correo.isBlank() || password == null || password.isEmpty()) {
-            throw new IllegalArgumentException("Debe ingresar correo y contraseña");
+            throw new ReglaNegocioException("Debe ingresar correo y contraseña");
         }
 
         Usuario usuario = usuarioRepo.findByCorreo(correo.trim()).orElse(null);
 
         if (usuario == null) {
             verificar(password, HASH_FALSO);
-            throw new IllegalArgumentException(MENSAJE_CREDENCIALES);
+            throw new ReglaNegocioException(MENSAJE_CREDENCIALES);
         }
 
         if (!verificar(password, usuario.password())) {
-            throw new IllegalArgumentException(MENSAJE_CREDENCIALES);
+            throw new ReglaNegocioException(MENSAJE_CREDENCIALES);
         }
         return new Usuario(usuario.id(), usuario.nombre(), usuario.correo(),
                            null, usuario.rol(), usuario.carreraCodigo());
