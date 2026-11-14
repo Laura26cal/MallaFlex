@@ -254,12 +254,15 @@ form {
     flex: 3;
 }
 
-input {
+input,
+select {
     padding: 14px 18px;
     border: 1px solid #ddd;
     border-radius: 12px;
     font-size: 16px;
     width: 100%;
+    background: white;
+    font-family: inherit;
 }
 
 label {

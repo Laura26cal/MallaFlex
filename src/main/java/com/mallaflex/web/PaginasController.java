@@ -29,8 +29,11 @@ public class PaginasController {
         return "malla";
     }
 
-    @GetMapping("/historia")
-    public String historia() { return "historia"; }
+   @GetMapping("/historia")
+    public String historia(Model model) {
+        model.addAttribute("materias", consulta.listarMaterias());
+        return "historia";
+    }
 
     @GetMapping("/ruta")
     public String ruta() { return "ruta"; }

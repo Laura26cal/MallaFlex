@@ -38,24 +38,31 @@
 
             <div class="card">
                 <h3>Registrar materia cursada</h3>
-                <form onsubmit="return false;">
+                
+                <form th:action="@{/historia}" method="post" onsubmit="return false;">
                     <div class="campo ancho">
                         <label>Materia</label>
-                        <input type="text" placeholder="Ej: Cálculo integral">
+                        <select name="materiaCodigo" required>
+                            <option value="" disabled selected>Elige una materia</option>
+                            <option th:each="m : ${materias}"
+                                    th:value="${m.codigo}"
+                                    th:text="${m.nombre + ' (' + m.codigo + ')'}">Materia</option>
+                        </select>
                     </div>
 
                     <div class="campo">
                         <label>Nota (0.0 a 5.0)</label>
-                        <input type="number" step="0.1" min="0" max="5" placeholder="3.8">
+                        <input type="number" name="nota" step="0.1" min="0" max="5" placeholder="3.8">
                     </div>
 
                     <div class="campo">
                         <label>Matrícula n.º</label>
-                        <input type="number" min="1" placeholder="1">
+                        <input type="number" name="matricula" min="1" placeholder="1" required>
                     </div>
 
                     <button type="submit">Guardar</button>
                 </form>
+
                 <div class="card tabla historia">
                     <table>
                         <thead>
