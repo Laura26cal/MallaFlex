@@ -47,13 +47,13 @@ public class HistoriaAcademicaRepository {
         return !jdbcTemplate.query(sql, (rs, rowNum) -> 1, usuarioId, materiaCodigo, matricula).isEmpty();
     }
 
-    // corregir la nota y el estado de un intento
+    // corregir un intento
     public boolean update(Long usuarioId, String materiaCodigo, Integer matricula, Double nota, String estado) {
         String sql = "UPDATE historia_academica SET nota = ?, estado = ? WHERE usuario_id = ? AND materia_codigo = ? AND numero_matricula = ?";
         return jdbcTemplate.update(sql, nota, estado, usuarioId, materiaCodigo, matricula) > 0;
     }
 
-    // borra el intento con mayor numero de matricula
+    // borrar el ultimo intento
     public boolean deleteUltimoIntento(Long usuarioId, String materiaCodigo) {
         String sql = "DELETE FROM historia_academica WHERE id = (SELECT id FROM historia_academica WHERE usuario_id = ? AND materia_codigo = ? ORDER BY numero_matricula DESC LIMIT 1)";
         return jdbcTemplate.update(sql, usuarioId, materiaCodigo) > 0;

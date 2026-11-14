@@ -32,7 +32,6 @@ public class HistoriaService {
         validarMatricula(matricula);
         validarNota(nota);
 
-        // no repetir la misma materia con la misma matricula
         if (repo.existsByUsuarioMateriaMatricula(usuarioId, materiaCodigo, matricula)) {
             throw new ReglaNegocioException("Ya registraste " + materia.nombre()
                     + " con la matrícula " + matricula + ".");
@@ -41,7 +40,6 @@ public class HistoriaService {
         repo.save(new HistoriaAcademica(null, usuarioId, materiaCodigo, matricula, nota, calcularEstado(nota)));
     }
 
-    // corrige la nota de un intento; el estado se recalcula con la nueva nota
     public void actualizarRegistro(Long usuarioId, String materiaCodigo, Integer matricula, Double nota) {
         validarNota(nota);
         if (!repo.update(usuarioId, materiaCodigo, matricula, nota, calcularEstado(nota))) {
@@ -50,7 +48,6 @@ public class HistoriaService {
         }
     }
 
-    // deshace el ultimo intento registrado de la materia
     public void eliminarRegistro(Long usuarioId, String materiaCodigo) {
         if (!repo.deleteUltimoIntento(usuarioId, materiaCodigo)) {
             throw new RecursoNoEncontradoException("No hay registros de la materia "
