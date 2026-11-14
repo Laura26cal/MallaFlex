@@ -419,3 +419,29 @@ td.nota {
     color: #222;
     padding: 15px;
 }
+
+.error404 {
+    text-align: center;
+    padding: 50px 28px;
+}
+
+.error404 h1 {
+    font-size: 80px;
+    margin: 0;
+    color: #e57388;
+}
+
+.error404 .detalle {
+    color: #888;
+    font-size: 14px;
+}
+
+.error404 button {
+    background: #222;
+    color: white;
+    border: none;
+    padding: 15px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 10px;
+}

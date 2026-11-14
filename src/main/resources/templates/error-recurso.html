@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MallaFlex - Error 404</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <h1>Malla<span>Flex</span></h1>
+            <nav>
+                <a th:href="@{/}">Inicio</a>
+                <a th:href="@{/ruta}">Ruta óptima</a>
+                <a th:href="@{/malla}">Malla curricular</a>
+                <a th:href="@{/historia}">Historia académica</a>
+            </nav>
+        </aside>
+
+        <main class="contenido">
+            <div class="card error404">
+                <h1>404</h1>
+                <h2>Página no encontrada</h2>
+                <p>Lo que buscas no existe o fue eliminado.</p>
+                <p class="detalle" th:text="${mensaje}">Detalle del error</p>
+                <button type="button" onclick="location.href='/'">Volver al inicio</button>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
