@@ -28,7 +28,7 @@
                 </div>
                 <div class="card">
                     <p>Materias registradas</p>
-                    <h2>4</h2>
+                    <h2 th:text="${#lists.size(filas)}">4</h2>
                 </div>
                 <div class="card">
                     <p>Créditos aprobados (en esta lista)</p>
@@ -39,7 +39,7 @@
             <div class="card">
                 <h3>Registrar materia cursada</h3>
                 
-                <form th:action="@{/historia}" method="post" onsubmit="return false;">
+                <form th:action="@{/historia}" method="post">
                     <div class="campo ancho">
                         <label>Materia</label>
                         <select name="materiaCodigo" required>
@@ -69,53 +69,23 @@
                             <tr>
                                 <th>Asignatura</th>
                                 <th>Créditos</th>
-                                <th>Periodo</th>
                                 <th>Matrícula</th>
                                 <th>Nota</th>
                                 <th>Estado</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Cálculo en varias variables (1000006-B)</td>
-                                <td>4</td>
-                                <td>2026-1S</td>
-                                <td>1</td>
-                                <td class="nota">3.5</td>
-                                <td><span class="etiqueta aprobada">Aprobada</span></td>
-                            </tr>
-                            <tr>
-                                <td>Ingeniería económica (2015703)</td>
-                                <td>3</td>
-                                <td>2026-1S</td>
-                                <td>1</td>
-                                <td class="nota">3.9</td>
-                                <td><span class="etiqueta aprobada">Aprobada</span></td>
-                            </tr>
-                            <tr>
-                                <td>Cálculo diferencial</td>
-                                <td>4</td>
-                                <td>2025-1S</td>
-                                <td>2</td>
-                                <td class="nota">2.9</td>
-                                <td><span class="etiqueta reprobada">Reprobada</span></td>
-                            </tr>
-                            <tr>
-                                <td>Programación de computadores</td>
-                                <td>3</td>
-                                <td>2025-1S</td>
-                                <td>1</td>
-                                <td class="nota">4.3</td>
-                                <td><span class="etiqueta aprobada">Aprobada</span></td>
-                            </tr>
-                            <tr>
-                                <td>Álgebra lineal</td>
-                                <td>4</td>
-                                <td>2025-2S</td>
-                                <td>1</td>
-                                <td class="nota">2.1</td>
-                                <td><span class="etiqueta reprobada">Reprobada</span></td>
-                            </tr>
+                            <tr th:each="f : ${filas}">
+                            <td th:text="${f.nombre + ' (' + f.codigo + ')'}">Materia</td>
+                            <td th:text="${f.creditos}">3</td>
+                            <td th:text="${f.matricula}">1</td>
+                            <td class="nota" th:text="${f.nota != null ? f.nota : '—'}">3.5</td>
+                            <td>
+                                <span class="etiqueta"
+                                    th:classappend="${f.estado == 'APROBADA' ? 'aprobada' : (f.estado == 'PERDIDA' ? 'reprobada' : 'encurso')}"
+                                    th:text="${f.estado == 'APROBADA' ? 'Aprobada' : (f.estado == 'PERDIDA' ? 'Reprobada' : 'En curso')}">Aprobada</span>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

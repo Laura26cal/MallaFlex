@@ -23,6 +23,14 @@
         <main class="contenido">
             <h2 class="titulo">Malla curricular</h2>
             <p class="sub" th:text="${malla.carrera.nombre}">Ingeniería de Sistemas y Computación.</p>
+            <select onchange="location.href='/malla?carrera=' + this.value">
+                <option th:each="c : ${carreras}"
+                        th:value="${c.codigo}"
+                        th:text="${c.codigo + ' - ' + c.nombre}"
+                        th:selected="${c.codigo == malla.carrera.codigo}">2A74 - Ingeniería</option>
+            </select>
+
+
             <div class="card aviso">
                 <p>Haz clic en una materia para marcarla como aprobada o perdida.</p>
             </div>
