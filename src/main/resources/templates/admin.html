@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MallaFlex - Administración</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="layout">
+        <aside th:replace="~{fragments :: sidebar('admin')}"></aside>
+
+        <main class="contenido">
+            <header class="top">
+                <div>
+                    <h2 class="titulo">Administración del catálogo</h2>
+                    <p class="sub">Gestiona carreras, materias y la malla de cada carrera.</p>
+                </div>
+                <div class="user">
+                    <div th:replace="~{fragments :: perfil}"></div>
+                </div>
+            </header>
+
+            <div class="alerta ok" th:if="${ok}" th:text="${ok}">Hecho</div>
+            <div class="alerta error" th:if="${error}" th:text="${error}">Error</div>
+
+            <!-- Crear materia -->
+            <div class="card bloque">
+                <h3>Nueva materia</h3>
+                <form th:action="@{/admin/materias}" method="post">
+                    <div class="campo"><label>Código</label><input type="text" name="codigo" required></div>
+                    <div class="campo ancho"><label>Nombre</label><input type="text" name="nombre" required></div>
+                    <div class="campo"><label>Créditos</label><input type="number" name="creditos" min="1" required></div>
+                    <div class="campo"><label>Prerrequisitos (códigos)</label><input type="text" name="prerrequisitos" placeholder="1000004, 2015734"></div>
+                    <div class="campo"><label>Correquisitos (códigos)</label><input type="text" name="correquisitos"></div>
+                    <button type="submit">Crear</button>
+                </form>
+            </div>
+
+            <!-- Asignar materia a una malla -->
+            <div class="card bloque">
+                <h3>Asignar materia a una malla</h3>
+                <form th:action="@{/admin/malla/asignar}" method="post">
+                    <div class="campo">
+                        <label>Carrera</label>
+                        <select name="carreraCodigo" required>
+                            <option th:each="c : ${carreras}" th:value="${c.codigo}"
+                                    th:text="${c.codigo + ' - ' + c.nombre}">2A74</option>
+                        </select>
+                    </div>
+                    <div class="campo ancho">
+                        <label>Materia</label>
+                        <select name="materiaCodigo" required>
+                            <option value="" disabled selected>Elige una materia</option>
+                            <option th:each="m : ${materias}" th:value="${m.codigo}"
+                                    th:text="${m.nombre + ' (' + m.codigo + ')'}">Materia</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label>Tipología</label>
+                        <select name="tipologia">
+                            <option value="">Sin tipología</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="L">L</option>
+                            <option value="P">P</option>
+                        </select>
+                    </div>
+                    <div class="campo"><label>Semestre</label><input type="number" name="semestre" min="1"></div>
+                    <button type="submit">Asignar</button>
+                </form>
+            </div>
+
+            <!-- Quitar materia de una malla -->
+            <div class="card bloque">
+                <h3>Quitar materia de una malla</h3>
+                <form th:action="@{/admin/malla/quitar}" method="post">
+                    <div class="campo">
+                        <label>Carrera</label>
+                        <select name="carreraCodigo" required>
+                            <option th:each="c : ${carreras}" th:value="${c.codigo}"
+                                    th:text="${c.codigo + ' - ' + c.nombre}">2A74</option>
+                        </select>
+                    </div>
+                    <div class="campo ancho">
+                        <label>Materia</label>
+                        <select name="materiaCodigo" required>
+                            <option value="" disabled selected>Elige una materia</option>
+                            <option th:each="m : ${materias}" th:value="${m.codigo}"
+                                    th:text="${m.nombre + ' (' + m.codigo + ')'}">Materia</option>
+                        </select>
+                    </div>
+                    <button type="submit">Quitar</button>
+                </form>
+            </div>
+
+            <!-- Crear carrera -->
+            <div class="card bloque">
+                <h3>Nueva carrera</h3>
+                <form th:action="@{/admin/carreras}" method="post">
+                    <div class="campo"><label>Código</label><input type="text" name="codigo" required></div>
+                    <div class="campo ancho"><label>Nombre</label><input type="text" name="nombre" required></div>
+                    <div class="campo"><label>Plan</label><input type="text" name="plan" required></div>
+                    <div class="campo"><label>Créditos totales</label><input type="number" name="creditosTotales" min="1" required></div>
+                    <div class="campo"><label>Semestres</label><input type="number" name="numSemestres" min="1" required></div>
+                    <div class="campo"><label>Libre elección</label><input type="number" name="creditosLibreEleccion" min="0" value="0"></div>
+                    <button type="submit">Crear</button>
+                </form>
+            </div>
+
+            <!-- Listados -->
+            <div class="card tabla">
+                <h3>Carreras</h3>
+                <table>
+                    <thead><tr><th>Código</th><th>Nombre</th><th>Créditos</th><th>Semestres</th><th></th></tr></thead>
+                    <tbody>
+                        <tr th:each="c : ${carreras}">
+                            <td th:text="${c.codigo}">2A74</td>
+                            <td th:text="${c.nombre}">Ingeniería</td>
+                            <td th:text="${c.creditosTotales}">165</td>
+                            <td th:text="${c.numSemestres}">10</td>
+                            <td>
+                                <form th:action="@{/admin/carreras/eliminar}" method="post"
+                                      onsubmit="return confirm('¿Eliminar esta carrera?');">
+                                    <input type="hidden" name="codigo" th:value="${c.codigo}">
+                                    <button type="submit" class="peligro">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card tabla">
+                <h3>Materias</h3>
+                <table>
+                    <thead><tr><th>Código</th><th>Nombre</th><th>Créditos</th><th></th></tr></thead>
+                    <tbody>
+                        <tr th:each="m : ${materias}">
+                            <td th:text="${m.codigo}">2015734</td>
+                            <td th:text="${m.nombre}">Programación de computadores</td>
+                            <td th:text="${m.creditos}">3</td>
+                            <td>
+                                <form th:action="@{/admin/materias/eliminar}" method="post"
+                                      onsubmit="return confirm('¿Eliminar esta materia?');">
+                                    <input type="hidden" name="codigo" th:value="${m.codigo}">
+                                    <button type="submit" class="peligro">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
