@@ -766,3 +766,5 @@ input[readonly] { background: #f6f6f4; color: #777; }
 }
 .punto { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; }
 .vacio { color: #777; }
+
+.estadisticas-vacia { padding: 48px 28px; text-align: center; color: #777; }

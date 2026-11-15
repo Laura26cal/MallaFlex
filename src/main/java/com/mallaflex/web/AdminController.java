@@ -23,7 +23,6 @@ import com.mallaflex.entity.Usuario;
 import com.mallaflex.exception.RecursoNoEncontradoException;
 import com.mallaflex.exception.ReglaNegocioException;
 import com.mallaflex.service.CatalogoConsultaService;
-import com.mallaflex.service.EstadisticasService;
 import com.mallaflex.service.ICatalogoAdmin;
 
 import jakarta.servlet.http.HttpSession;
@@ -34,13 +33,10 @@ public class AdminController {
 
     private final ICatalogoAdmin admin;
     private final CatalogoConsultaService consulta;
-    private final EstadisticasService estadisticas;
 
-    public AdminController(ICatalogoAdmin admin, CatalogoConsultaService consulta,
-                           EstadisticasService estadisticas) {
+    public AdminController(ICatalogoAdmin admin, CatalogoConsultaService consulta) {
         this.admin = admin;
         this.consulta = consulta;
-        this.estadisticas = estadisticas;
     }
 
     @GetMapping
@@ -59,7 +55,7 @@ public class AdminController {
         model.addAttribute("q", q);
         model.addAttribute("carreras", consulta.listarCarreras().stream()
                 .filter(c -> coincide(q, c.codigo(), c.nombre())).toList());
-        model.addAttribute("conteo", estadisticas.materiasPorCarrera());
+        model.addAttribute("conteo", consulta.contarMateriasPorCarrera());
         return "admin-mallas";
     }
 
@@ -247,19 +243,13 @@ public class AdminController {
                         prerrequisitos, correquisitos));
     }
 
-    // ---------- estadísticas ----------
+    //estadísticas
 
     @GetMapping("/estadisticas")
     public String verEstadisticas(HttpSession session, Model model) {
         Usuario u = adminEnSesion(session);
         if (u == null) return "redirect:/";
         datosSesion(model, u);
-        model.addAttribute("resumen", estadisticas.resumen());
-        model.addAttribute("porCarrera", estadisticas.estudiantesPorCarrera());
-        model.addAttribute("estados", estadisticas.estadoDeLasMaterias());
-        model.addAttribute("masPerdidas", estadisticas.materiasMasPerdidas());
-        model.addAttribute("masCursadas", estadisticas.materiasMasCursadas());
-        model.addAttribute("materiasPorMalla", estadisticas.materiasPorMalla());
         return "admin-estadisticas";
     }
 

@@ -30,6 +30,13 @@ package com.mallaflex.service;
     return carreraRepo.findAll();
 }
 
+public Map<String, Integer> contarMateriasPorCarrera() {
+    return carreraRepo.findAll().stream()
+        .collect(Collectors.toMap(
+            Carrera::codigo,
+            c -> mallaRepo.findMateriasByCarrera(c.codigo()).size()));
+}
+
 public Carrera obtenerCarrera(String codigo) {
     return carreraRepo.findById(codigo)
         .orElseThrow(() -> new RecursoNoEncontradoException(
