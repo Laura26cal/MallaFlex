@@ -15,16 +15,15 @@ package com.mallaflex.service;
     private final CarreraRepository carreraRepo;
     private final MateriaRepository materiaRepo;
     private final MallaRepository mallaRepo;
-    private final MateriaOpcionRepository opcionRepo;
+
 
     public CatalogoConsultaService(CarreraRepository carreraRepo,
                                    MateriaRepository materiaRepo,
-                                   MallaRepository mallaRepo,
-                                   MateriaOpcionRepository opcionRepo) {
+                                   MallaRepository mallaRepo ) {
         this.carreraRepo = carreraRepo;
         this.materiaRepo = materiaRepo;
         this.mallaRepo = mallaRepo;
-        this.opcionRepo = opcionRepo; 
+    
     }
 
     public List<Carrera> listarCarreras() {
