@@ -18,6 +18,13 @@
                 <a th:href="@{/malla}" class="activo">Malla curricular</a>
                 <a th:href="@{/historia}">Historia académica</a>
             </nav>
+            <div class="sesion">
+                <p th:if="${usuario != null}" th:text="${usuario.nombre}">Nombre</p>
+                <form th:if="${usuario != null}" th:action="@{/logout}" method="post">
+                    <button type="submit">Cerrar sesión</button>
+                </form>
+                <a th:if="${usuario == null}" th:href="@{/login}">Iniciar sesión</a>
+            </div>
         </aside>
 
         <main class="contenido">
@@ -32,7 +39,7 @@
 
 
             <div class="card aviso">
-                <p>Haz clic en una materia para marcarla como aprobada o perdida.</p>
+                
             </div>
             <div class="leyenda">
                 <div class="leyenda-items">
@@ -42,14 +49,16 @@
                     <span><i class="cuadro desbloqueada"></i>Desbloqueada</span>
                     <span><i class="cuadro bloqueada"></i>Bloqueada</span>
                 </div>
-                <p class="resumen">18 aprobadas · 5 en curso · 0 perdidas</p>
+                <p class="resumen" th:if="${resumen != null}"
+                    th:text="${resumen.materiasAprobadas} + ' aprobadas · ' + ${resumen.materiasCursando} + ' en curso · ' + ${resumen.materiasPerdidas} + ' perdidas'">0 aprobadas</p>
             </div>
 
             <div class="semestres">
                 <div class="semestre" th:each="s : ${malla.semestres}">
                     <h3 th:text="${s.semestre == 0 ? 'Sin semestre' : 'Semestre ' + s.semestre}">Semestre 1</h3>
 
-                    <div class="materia" th:each="m : ${s.materias}">
+                    <div class="materia" th:each="m : ${s.materias}"
+                        th:classappend="${estados[m.codigo] != null ? #strings.toLowerCase(#strings.replace(estados[m.codigo], '_', '')) : ''}">
                         <h4 th:text="${m.nombre}">Materia</h4>
                         <p th:text="${m.creditos} + ' cr.'">3 cr.</p>
                     </div>

@@ -448,3 +448,62 @@ td.nota {
     cursor: pointer;
     margin-top: 10px;
 }
+
+.auth {
+    max-width: 420px;
+    margin: 60px auto;
+}
+
+.auth .logo {
+    text-align: center;
+}
+
+.auth .logo span {
+    color: #c8334f;
+}
+
+.form-columna {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.alerta {
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+
+.alerta.ok {
+    background: #dff0e0;
+    border: 1px solid #b7dbb9;
+    color: #2b7a4b;
+}
+
+.alerta.error {
+    background: #fcdde2;
+    border: 1px solid #f5b8c2;
+    color: #c8334f;
+}
+
+.sesion {
+    margin-top: 30px;
+    padding: 0 18px;
+    color: #666;
+}
+
+.sesion button {
+    background: white;
+    color: #c8334f;
+    border: 1px solid #f5b8c2;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.materia.perdida {
+    background: #fdeccb;
+    border: 1px solid #f3d899;
+    color: #8a6100;
+}

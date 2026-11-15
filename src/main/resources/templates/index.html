@@ -15,6 +15,13 @@
                 <a th:href="@{/malla}">Malla curricular</a>
                 <a th:href="@{/historia}">Historia académica</a>
             </nav>
+            <div class="sesion">
+                <p th:if="${usuario != null}" th:text="${usuario.nombre}">Nombre</p>
+                <form th:if="${usuario != null}" th:action="@{/logout}" method="post">
+                    <button type="submit">Cerrar sesión</button>
+                </form>
+                <a th:if="${usuario == null}" th:href="@{/login}">Iniciar sesión</a>
+            </div>
         </aside>
 
         <main class="contenido">
@@ -29,7 +36,7 @@
                                 th:text="${c.codigo + ' - ' + c.nombre}"
                                 th:selected="${c.codigo == malla.carrera.codigo}">272A - Ingeniería</option>
                     </select>
-                    <div class="avatar">L</div>
+                    <div class="avatar" th:text="${usuario != null ? #strings.substring(usuario.nombre, 0, 1) : '?'}">L</div>
                 </div>
             </header>
 
@@ -39,9 +46,10 @@
                     <p>Progreso de la carrera</p>
 
                     <div class="fila-progreso">
-                        <h2>38%</h2>
+                        <h2 th:text="${resumen != null ? #numbers.formatDecimal(resumen.porcentajeProgreso, 1, 0) + '%' : '—'}">38%</h2>
                         <div class="barra">
-                            <div class="barra-llena"></div>
+                            <div class="barra-llena"
+                                th:style="'width:' + (${resumen != null} ? ${#numbers.formatDecimal(resumen.porcentajeProgreso, 1, 0)} : 0) + '%'"></div>
                         </div>
                     </div>
                 </div>
@@ -53,19 +61,19 @@
 
                 <div class="card">
                     <p>P.A.P.A.</p>
-                    <h2>4.2</h2>
+                    <h2 th:text="${resumen != null and resumen.papa != null ? #numbers.formatDecimal(resumen.papa, 1, 1, 'POINT') : '—'}">4.2</h2>
                 </div>
             </div>
             <div class="grid">
 
                 <div class="card">
                     <p>Materias cursando</p>
-                    <h2 class="rojo">5</h2>
+                    <h2 class="rojo" th:text="${resumen != null ? resumen.materiasCursando : '—'}">5</h2>
                 </div>
 
                 <div class="card">
                     <p>Materias aprobadas</p>
-                    <h2 class="verde">18</h2>
+                    <h2 class="verde" th:text="${resumen != null ? resumen.materiasAprobadas : '—'}">18</h2>
                 </div>
                 <div class="card rosa">
                     <h3>Semestre estimado de graduación</h3>
@@ -90,41 +98,13 @@
                             <th>Cursando</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Disciplinar optativa</td>
-                            <td>36</td>
-                            <td class="verde">5</td>
-                            <td>31</td>
-                            <td>—</td>
-                        </tr>
-                        <tr>
-                            <td>Fundamentación obligatoria</td>
-                            <td>16</td>
-                            <td class="verde">6</td>
-                            <td>10</td>
-                            <td>—</td>
-                        </tr>
-                        <tr>
-                            <td>Fundamentación optativa</td>
-                            <td>15</td>
-                            <td class="verde">4</td>
-                            <td>11</td>
-                            <td>—</td>
-                        </tr>
-                        <tr>
-                            <td>Libre elección</td>
-                            <td>30</td>
-                            <td class="verde">3</td>
-                            <td>27</td>
-                            <td>—</td>
-                        </tr>
-                        <tr>
-                            <td>Trabajo de grado</td>
-                            <td>8</td>
-                            <td class="verde">0</td>
-                            <td>8</td>
-                            <td>—</td>
+                    <tbody th:if="${resumen != null}">
+                        <tr th:each="t : ${resumen.porTipologia}">
+                            <td th:text="${t.tipologia}">Tipología</td>
+                            <td th:text="${t.total}">36</td>
+                            <td class="verde" th:text="${t.aprobadas}">5</td>
+                            <td th:text="${t.pendientes}">31</td>
+                            <td th:text="${t.cursando > 0 ? t.cursando : '—'}">—</td>
                         </tr>
                     </tbody>
                 </table>

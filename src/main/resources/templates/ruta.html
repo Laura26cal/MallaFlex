@@ -18,6 +18,13 @@
                 <a th:href="@{/malla}">Malla curricular</a>
                 <a th:href="@{/historia}">Historia académica</a>
             </nav>
+            <div class="sesion">
+                <p th:if="${usuario != null}" th:text="${usuario.nombre}">Nombre</p>
+                <form th:if="${usuario != null}" th:action="@{/logout}" method="post">
+                    <button type="submit">Cerrar sesión</button>
+                </form>
+                <a th:if="${usuario == null}" th:href="@{/login}">Iniciar sesión</a>
+            </div>
         </aside>
 
         <main class="contenido">

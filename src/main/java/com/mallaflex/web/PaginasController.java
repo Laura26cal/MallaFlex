@@ -10,6 +10,10 @@ import com.mallaflex.entity.Materia;
 import com.mallaflex.entity.Usuario;
 import com.mallaflex.service.CatalogoConsultaService;
 import com.mallaflex.service.HistoriaService;
+import java.util.Map;
+import com.mallaflex.service.EstadosMallaService;
+import com.mallaflex.service.AvanceService;
+
 
 import jakarta.servlet.http.HttpSession;
 
@@ -18,27 +22,43 @@ public class PaginasController {
 
     private final CatalogoConsultaService consulta;
     private final HistoriaService historiaService;
+    private final EstadosMallaService estadosService;
+    private final AvanceService avanceService;
 
-    public PaginasController(CatalogoConsultaService consulta, HistoriaService historiaService) {
+    public PaginasController(CatalogoConsultaService consulta, HistoriaService historiaService,
+                            EstadosMallaService estadosService, AvanceService avanceService) {
         this.consulta = consulta;
         this.historiaService = historiaService;
+        this.estadosService = estadosService;
+        this.avanceService = avanceService;
     }
 
     @GetMapping("/")
     public String inicio(@RequestParam(required = false) String carrera, HttpSession session, Model model) {
         Usuario usuario = usuarioEnSesion(session);
+        String codigo = resolverCarrera(carrera, usuario);
         cargarDatosSesion(model, usuario);
         model.addAttribute("carreras", consulta.listarCarreras());
-        model.addAttribute("malla", consulta.obtenerMalla(resolverCarrera(carrera, usuario)));
+        model.addAttribute("malla", consulta.obtenerMalla(codigo));
+        if (usuario != null) {
+            model.addAttribute("resumen", avanceService.obtenerResumen(usuario.id(), codigo));
+        }
         return "index";
     }
 
     @GetMapping("/malla")
     public String malla(@RequestParam(required = false) String carrera, HttpSession session, Model model) {
         Usuario usuario = usuarioEnSesion(session);
+        String codigo = resolverCarrera(carrera, usuario);
         cargarDatosSesion(model, usuario);
         model.addAttribute("carreras", consulta.listarCarreras());
-        model.addAttribute("malla", consulta.obtenerMalla(resolverCarrera(carrera, usuario)));
+        model.addAttribute("malla", consulta.obtenerMalla(codigo));
+        if (usuario != null) {
+            model.addAttribute("estados", estadosService.estadosMalla(usuario.id(), codigo));
+            model.addAttribute("resumen", avanceService.obtenerResumen(usuario.id(), codigo));
+        } else {
+            model.addAttribute("estados", Map.<String, String>of());
+        }
         return "malla";
     }
 
@@ -50,6 +70,7 @@ public class PaginasController {
             return "redirect:/login";
         }
         cargarDatosSesion(model, usuario);
+        model.addAttribute("resumen", avanceService.obtenerResumen(usuario.id(), resolverCarrera(null, usuario)));
         model.addAttribute("materias", consulta.listarMaterias());
         model.addAttribute("filas", historiaService.listarHistoria(usuario.id()).stream()
             .map(h -> {

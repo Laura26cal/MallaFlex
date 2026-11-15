@@ -15,6 +15,13 @@
                 <a th:href="@{/malla}">Malla curricular</a>
                 <a th:href="@{/historia}" class="activo">Historia académica</a>
             </nav>
+            <div class="sesion">
+                <p th:if="${usuario != null}" th:text="${usuario.nombre}">Nombre</p>
+                <form th:if="${usuario != null}" th:action="@{/logout}" method="post">
+                    <button type="submit">Cerrar sesión</button>
+                </form>
+                <a th:if="${usuario == null}" th:href="@{/login}">Iniciar sesión</a>
+            </div>
         </aside>
 
 
@@ -24,15 +31,15 @@
             <div class="grid">
                 <div class="card">
                     <p>P.A.P.A.</p>
-                    <h2>4.2</h2>
+                    <h2 th:text="${resumen.papa != null ? #numbers.formatDecimal(resumen.papa, 1, 1, 'POINT') : '—'}">4.2</h2>
                 </div>
                 <div class="card">
                     <p>Materias registradas</p>
                     <h2 th:text="${#lists.size(filas)}">4</h2>
                 </div>
                 <div class="card">
-                    <p>Créditos aprobados (en esta lista)</p>
-                    <h2 class="verde">14</h2>
+                    <p>Créditos aprobados</p>
+                    <h2 class="verde" th:text="${resumen.creditosAprobados}">14</h2>
                 </div>
             </div>
 

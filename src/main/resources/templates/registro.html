@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MallaFlex - Registro</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="auth">
+        <h1 class="logo">Malla<span>Flex</span></h1>
+        <div class="card">
+            <h3>Crear cuenta</h3>
+
+            <div class="alerta error" th:if="${error}" th:text="${error}">Error</div>
+
+            <form class="form-columna" th:action="@{/registro}" method="post">
+                <div class="campo">
+                    <label>Nombre</label>
+                    <input type="text" name="nombre" required>
+                </div>
+                <div class="campo">
+                    <label>Correo</label>
+                    <input type="email" name="correo" required>
+                </div>
+                <div class="campo">
+                    <label>Contraseña</label>
+                    <input type="password" name="password" required>
+                </div>
+                <div class="campo">
+                    <label>Carrera</label>
+                    <select name="carrera" required>
+                        <option value="" disabled selected>Elige tu carrera</option>
+                        <option th:each="c : ${carreras}"
+                                th:value="${c.codigo}"
+                                th:text="${c.codigo + ' - ' + c.nombre}">2A74 - Ingeniería</option>
+                    </select>
+                </div>
+                <button type="submit">Crear cuenta</button>
+            </form>
+
+            <p>¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión</a></p>
+        </div>
+    </div>
+</body>
+</html>
