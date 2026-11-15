@@ -62,5 +62,15 @@
         </th:block>
     </div>
 
+
+    <!-- Traduce el código de tipología (B, C, L, P) a su nombre -->
+    <th:block th:fragment="tipologia(cod)" th:switch="${cod}">
+        <th:block th:case="'B'">Fundamentación obligatoria</th:block>
+        <th:block th:case="'C'">Disciplinar obligatoria</th:block>
+        <th:block th:case="'L'">Libre elección</th:block>
+        <th:block th:case="'P'">Nivelación</th:block>
+        <th:block th:case="'SIN_TIPOLOGIA'">Sin tipología</th:block>
+        <th:block th:case="*" th:text="${cod != null and cod != '' ? cod : '—'}">—</th:block>
+    </th:block>
 </body>
 </html>

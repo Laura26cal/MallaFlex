@@ -9,10 +9,10 @@
 
     <div class="layout">
 
-        <aside th:replace="~{fragments :: sidebar('inicio')}"></aside>
+        <aside th:replace="~{fragments :: sidebar('malla')}"></aside>
 
         <main class="contenido">
-            
+
             <header class="top">
                 <div>
                     <h2 class="titulo">Malla curricular</h2>
@@ -23,10 +23,8 @@
                 </div>
             </header>
 
+            <div class="card aviso"></div>
 
-            <div class="card aviso">
-                
-            </div>
             <div class="leyenda">
                 <div class="leyenda-items">
                     <span><i class="cuadro aprobada"></i>Aprobada</span>
@@ -49,9 +47,6 @@
                         <p th:text="${m.creditos} + ' cr.'">3 cr.</p>
                     </div>
                 </div>
-            </div>
-
-
             </div>
 
         </main>

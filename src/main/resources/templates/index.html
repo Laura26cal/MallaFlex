@@ -85,7 +85,7 @@
                     </thead>
                     <tbody th:if="${resumen != null}">
                         <tr th:each="t : ${resumen.porTipologia}">
-                            <td th:text="${t.tipologia}">Tipología</td>
+                            <td><th:block th:replace="~{fragments :: tipologia(${t.tipologia})}">Tipología</th:block></td>
                             <td th:text="${t.total}">36</td>
                             <td class="verde" th:text="${t.aprobadas}">5</td>
                             <td th:text="${t.pendientes}">31</td>

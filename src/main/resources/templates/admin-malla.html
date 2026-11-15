@@ -97,11 +97,11 @@
                                     <input class="mini" type="number" name="semestre" min="1"
                                            th:max="${carrera.numSemestres}" placeholder="Sem.">
                                     <select class="mini" name="tipologia">
-                                        <option value="">Tip.</option>
-                                        <option value="B">B</option>
-                                        <option value="C">C</option>
-                                        <option value="L">L</option>
-                                        <option value="P">P</option>
+                                        <option value="">Tipología</option>
+                                        <option value="B">Fundamentación obligatoria</option>
+                                        <option value="C">Disciplinar obligatoria</option>
+                                        <option value="L">Libre elección</option>
+                                        <option value="P">Nivelación</option>
                                     </select>
                                     <button type="submit">Agregar</button>
                                 </form>
@@ -135,7 +135,7 @@
                             <td th:text="${m.codigo}">2015734</td>
                             <td th:text="${m.nombre}">Programación</td>
                             <td th:text="${m.creditos}">3</td>
-                            <td th:text="${m.tipologia ?: '—'}">C</td>
+                            <td><th:block th:replace="~{fragments :: tipologia(${m.tipologia})}">C</th:block></td>
                             <td th:text="${#lists.isEmpty(m.prerrequisitos)} ? '—' : ${#strings.listJoin(m.prerrequisitos, ', ')}">—</td>
                             <td th:text="${#lists.isEmpty(m.correquisitos)} ? '—' : ${#strings.listJoin(m.correquisitos, ', ')}">—</td>
                             <td>
