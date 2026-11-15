@@ -36,6 +36,8 @@ public class PaginasController {
     @GetMapping("/")
     public String inicio(@RequestParam(required = false) String carrera, HttpSession session, Model model) {
         Usuario usuario = usuarioEnSesion(session);
+        if (esAdmin(usuario)) return "redirect:/admin/mallas";
+        
         String codigo = resolverCarrera(carrera, usuario);
         cargarDatosSesion(model, usuario);
         model.addAttribute("carreras", consulta.listarCarreras());
@@ -104,19 +106,6 @@ public class PaginasController {
         cargarDatosSesion(model, usuario);
         return "ruta";
      }
-
-    @GetMapping ("/admin")
-    public String admin(HttpSession session, Model model) {
-        Usuario usuario = usuarioEnSesion(session);
-        if (!esAdmin(usuario)) {
-            return "redirect:/";
-        }
-
-        cargarDatosSesion(model, usuario);
-        model.addAttribute("carreras", consulta.listarCarreras());
-        model.addAttribute("materias", consulta.listarMaterias());
-        return "admin";
-    }
 
     private Usuario usuarioEnSesion(HttpSession session) {
         return (Usuario) session.getAttribute("usuario");

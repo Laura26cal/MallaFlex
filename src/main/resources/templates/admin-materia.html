@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MallaFlex - Materia</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="layout">
+    <aside th:replace="~{fragments :: sidebar('mallas')}"></aside>
+
+    <main class="contenido">
+        <header class="top">
+            <div>
+                <h2 class="titulo" th:text="${nueva} ? 'Nueva materia' : 'Editar materia'">Materia</h2>
+                <p class="sub" th:text="'Malla: ' + ${carrera.nombre}">Malla</p>
+            </div>
+            <div class="user">
+                <div th:replace="~{fragments :: perfil}"></div>
+            </div>
+        </header>
+
+        <a class="volver" th:href="@{/admin/mallas/{c}(c=${carrera.codigo})}">← Volver a la malla</a>
+
+        <div class="alerta ok" th:if="${ok}" th:text="${ok}">Hecho</div>
+        <div class="alerta error" th:if="${error}" th:text="${error}">Error</div>
+
+        <div class="card bloque-form">
+            <form class="form-admin" method="post"
+                  th:action="${nueva} ? @{/admin/mallas/{c}/materias/nueva(c=${carrera.codigo})} : @{/admin/mallas/{c}/materias/{m}(c=${carrera.codigo}, m=${codigoMateria})}">
+
+                <div class="fila-campos">
+                    <div class="campo">
+                        <label>Código</label>
+                        <input type="text" name="codigoMateria" th:value="${codigoMateria}" th:readonly="${!nueva}" required>
+                    </div>
+                    <div class="campo ancho">
+                        <label>Nombre</label>
+                        <input type="text" name="nombre" th:value="${nombre}" required>
+                    </div>
+                    <div class="campo">
+                        <label>Créditos</label>
+                        <input type="number" name="creditos" min="1" th:value="${creditos}" required>
+                    </div>
+                </div>
+
+                <div class="fila-campos">
+                    <div class="campo">
+                        <label>Semestre en esta malla</label>
+                        <input type="number" name="semestre" min="1" th:max="${carrera.numSemestres}" th:value="${semestre}">
+                    </div>
+                    <div class="campo">
+                        <label>Tipología en esta malla</label>
+                        <select name="tipologia">
+                            <option value="" th:selected="${tipologia == ''}">Sin tipología</option>
+                            <option value="B" th:selected="${tipologia == 'B'}">B</option>
+                            <option value="C" th:selected="${tipologia == 'C'}">C</option>
+                            <option value="L" th:selected="${tipologia == 'L'}">L</option>
+                            <option value="P" th:selected="${tipologia == 'P'}">P</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label>&nbsp;</label>
+                        <label class="check">
+                            <input type="checkbox" name="requiereMallaCompleta" value="true" th:checked="${requiereMallaCompleta}">
+                            Requiere tener la malla completa
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Prerrequisitos -->
+                <div class="campo selector" data-campo="prerrequisitos">
+                    <label>Prerrequisitos</label>
+                    <input type="text" class="selector-entrada" list="lista-materias" autocomplete="off"
+                           placeholder="Busca por código o nombre y elige de la lista">
+                    <div class="chips">
+                        <span class="chip" th:each="cod : ${prerrequisitos}">
+                            <span th:text="${cod + ' · ' + nombres[cod]}">código · nombre</span>
+                            <input type="hidden" name="prerrequisitos" th:value="${cod}">
+                            <button type="button" class="chip-x" aria-label="Quitar">×</button>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Correquisitos -->
+                <div class="campo selector" data-campo="correquisitos">
+                    <label>Correquisitos</label>
+                    <input type="text" class="selector-entrada" list="lista-materias" autocomplete="off"
+                           placeholder="Busca por código o nombre y elige de la lista">
+                    <div class="chips">
+                        <span class="chip" th:each="cod : ${correquisitos}">
+                            <span th:text="${cod + ' · ' + nombres[cod]}">código · nombre</span>
+                            <input type="hidden" name="correquisitos" th:value="${cod}">
+                            <button type="button" class="chip-x" aria-label="Quitar">×</button>
+                        </span>
+                    </div>
+                </div>
+
+                <p class="nota">
+                    Nombre, créditos y requisitos son de la materia y se reflejan en todas las mallas donde esté.
+                    Semestre, tipología y «malla completa» solo aplican a esta malla.
+                </p>
+
+                <div class="acciones-form">
+                    <a class="btn claro" th:href="@{/admin/mallas/{c}(c=${carrera.codigo})}">Cancelar</a>
+                    <button type="submit" th:text="${nueva} ? 'Crear y agregar a la malla' : 'Guardar cambios'">Guardar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Lista para buscar materias por código o nombre -->
+        <datalist id="lista-materias">
+            <option th:each="m : ${materias}" th:value="${m.codigo + ' · ' + m.nombre}"
+                    th:attr="data-codigo=${m.codigo}"></option>
+        </datalist>
+    </main>
+</div>
+<script th:src="@{/js/admin.js}"></script>
+</body>
+</html>

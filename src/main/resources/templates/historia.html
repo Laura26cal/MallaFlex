@@ -7,27 +7,22 @@
 </head>
 <body>
     <div class="layout">
-        <aside class="sidebar">
-            <h1>Malla<span>Flex</span></h1>
-            <nav>
-                <a th:href="@{/}">Inicio</a>
-                <a th:href="@{/ruta}">Ruta óptima</a>
-                <a th:href="@{/malla}">Malla curricular</a>
-                <a th:href="@{/historia}" class="activo">Historia académica</a>
-            </nav>
-            <div class="sesion">
-                <p th:if="${usuario != null}" th:text="${usuario.nombre}">Nombre</p>
-                <form th:if="${usuario != null}" th:action="@{/logout}" method="post">
-                    <button type="submit">Cerrar sesión</button>
-                </form>
-                <a th:if="${usuario == null}" th:href="@{/login}">Iniciar sesión</a>
-            </div>
-        </aside>
+        <aside th:replace="~{fragments :: sidebar('inicio')}"></aside>
 
 
         <main class="contenido">
-            <h2 class="titulo">Historia académica</h2>
-            <p class="sub">Registra tus materias con nota y matrícula.</p>
+            
+            <header class="top">
+                <div>
+                    <h2 class="titulo">Historia académica</h2>
+                    <p class="sub">Registra tus materias con nota y matrícula.</p>
+                </div>
+                <div class="user">
+                    <div th:replace="~{fragments :: perfil}"></div>
+                </div>
+            </header>
+
+          
             <div class="grid">
                 <div class="card">
                     <p>P.A.P.A.</p>
@@ -62,7 +57,7 @@
                         <input type="number" name="nota" step="0.1" min="0" max="5" placeholder="3.8">
                     </div>
 
-                    <div class="campo">
+                    <div class="campo"> 
                         <label>Matrícula n.º</label>
                         <input type="number" name="matricula" min="1" placeholder="1" required>
                     </div>

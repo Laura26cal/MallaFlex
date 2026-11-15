@@ -202,6 +202,50 @@ public class CatalogoAdminService implements ICatalogoAdmin {
         mallaRepository.removeMateria(carreraCodigo, materiaCodigo);
     }
 
+    @Override
+    public void actualizarMateriaEnCarrera(String carreraCodigo, String materiaCodigo, String tipologia,
+                                           Integer semestreSugerido, boolean requiereMallaCompleta) {
+        Carrera carrera = obtenerCarreraOFallar(carreraCodigo);
+        obtenerMateriaOFallar(materiaCodigo);
+        if (!mallaRepository.existsMateriaEnCarrera(carreraCodigo, materiaCodigo)) {
+            throw new RecursoNoEncontradoException("La materia " + etiqueta(materiaCodigo)
+                    + " no está en la malla de la carrera " + carrera.nombre() + ".");
+        }
+        if (semestreSugerido != null
+                && (semestreSugerido < 1 || semestreSugerido > carrera.numSemestres())) {
+            throw new ReglaNegocioException("El semestre sugerido debe estar entre 1 y "
+                    + carrera.numSemestres() + ".");
+        }
+        mallaRepository.updateMateria(carreraCodigo, materiaCodigo, tipologia, semestreSugerido,
+                requiereMallaCompleta);
+    }
+
+    @Override
+    public void crearMateriaEnMalla(String carreraCodigo, Materia materia, List<String> prerrequisitos,
+                                    List<String> correquisitos, String tipologia, Integer semestreSugerido,
+                                    boolean requiereMallaCompleta) {
+        Materia limpia = validarDatosMateria(materia);
+        crearMateria(limpia, prerrequisitos, correquisitos);
+        asignarMateriaACarrera(carreraCodigo, limpia.codigo(), tipologia, semestreSugerido,
+                requiereMallaCompleta);
+    }
+
+    @Override
+    public void guardarMateriaEnMalla(String carreraCodigo, Materia materia, String tipologia,
+                                      Integer semestreSugerido, boolean requiereMallaCompleta,
+                                      List<String> prerrequisitos, List<String> correquisitos) {
+        Materia limpia = validarDatosMateria(materia);
+        actualizarMateria(limpia);
+        actualizarMateriaEnCarrera(carreraCodigo, limpia.codigo(), tipologia, semestreSugerido,
+                requiereMallaCompleta);
+        reemplazarPrerrequisitos(limpia.codigo(), prerrequisitos);
+        reemplazarCorrequisitos(limpia.codigo(), correquisitos);
+    }
+
+
+
+
+
     // validaciones
 
     private Carrera validarDatosCarrera(Carrera c) {

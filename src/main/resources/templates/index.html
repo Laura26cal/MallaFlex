@@ -7,22 +7,7 @@
 </head>
 <body>
     <div class="layout">
-        <aside class="sidebar">
-            <h1>Malla<span>Flex</span></h1>
-            <nav>
-                <a th:href="@{/}" class="activo">Inicio</a>
-                <a th:href="@{/ruta}">Ruta óptima</a>
-                <a th:href="@{/malla}">Malla curricular</a>
-                <a th:href="@{/historia}">Historia académica</a>
-            </nav>
-            <div class="sesion">
-                <p th:if="${usuario != null}" th:text="${usuario.nombre}">Nombre</p>
-                <form th:if="${usuario != null}" th:action="@{/logout}" method="post">
-                    <button type="submit">Cerrar sesión</button>
-                </form>
-                <a th:if="${usuario == null}" th:href="@{/login}">Iniciar sesión</a>
-            </div>
-        </aside>
+        <aside th:replace="~{fragments :: sidebar('inicio')}"></aside>
 
         <main class="contenido">
 
@@ -36,7 +21,7 @@
                                 th:text="${c.codigo + ' - ' + c.nombre}"
                                 th:selected="${c.codigo == malla.carrera.codigo}">272A - Ingeniería</option>
                     </select>
-                    <div class="avatar" th:text="${usuario != null ? #strings.substring(usuario.nombre, 0, 1) : '?'}">L</div>
+                    <div th:replace="~{fragments :: perfil}"></div>
                 </div>
             </header>
 

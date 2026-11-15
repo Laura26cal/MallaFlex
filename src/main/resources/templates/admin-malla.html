@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MallaFlex - Editar malla</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="layout">
+    <aside th:replace="~{fragments :: sidebar('mallas')}"></aside>
+
+    <main class="contenido">
+        <header class="top">
+            <div>
+                <h2 class="titulo" th:text="${nueva} ? 'Nueva malla' : ${carrera.nombre}">Malla</h2>
+                <p class="sub" th:text="${nueva} ? 'Primero crea la malla; después podrás agregarle materias.' : 'Edita los datos de la malla y sus materias por semestre.'">Subtítulo</p>
+            </div>
+            <div class="user">
+                <div th:replace="~{fragments :: perfil}"></div>
+            </div>
+        </header>
+
+        <a class="volver" th:href="@{/admin/mallas}">← Volver a las mallas</a>
+
+        <div class="alerta ok" th:if="${ok}" th:text="${ok}">Hecho</div>
+        <div class="alerta error" th:if="${error}" th:text="${error}">Error</div>
+
+        <!-- Datos de la malla -->
+        <div class="card bloque-form">
+            <h3>Datos de la malla</h3>
+            <form class="form-admin" method="post"
+                  th:action="${nueva} ? @{/admin/mallas} : @{/admin/mallas/{c}/datos(c=${carrera.codigo})}">
+                <div class="fila-campos">
+                    <div class="campo">
+                        <label>Código</label>
+                        <input type="text" name="codigo" th:value="${carrera.codigo}" th:readonly="${!nueva}" required>
+                    </div>
+                    <div class="campo ancho">
+                        <label>Nombre</label>
+                        <input type="text" name="nombre" th:value="${carrera.nombre}" required>
+                    </div>
+                    <div class="campo">
+                        <label>Plan</label>
+                        <input type="text" name="plan" th:value="${carrera.plan}" required>
+                    </div>
+                </div>
+                <div class="fila-campos">
+                    <div class="campo">
+                        <label>Créditos totales</label>
+                        <input type="number" name="creditosTotales" min="1" th:value="${carrera.creditosTotales}" required>
+                    </div>
+                    <div class="campo">
+                        <label>Semestres</label>
+                        <input type="number" name="numSemestres" min="1" th:value="${carrera.numSemestres}" required>
+                    </div>
+                    <div class="campo">
+                        <label>Créditos de libre elección</label>
+                        <input type="number" name="creditosLibreEleccion" min="0" th:value="${carrera.creditosLibreEleccion}">
+                    </div>
+                </div>
+                <p class="nota" th:unless="${nueva}"
+                   th:text="'Créditos en la malla: ' + ${malla.creditosMalla} + ' de ' + ${carrera.creditosTotales} + ' totales.'">Créditos</p>
+                <div class="acciones-form">
+                    <button type="submit" th:text="${nueva} ? 'Crear malla' : 'Guardar cambios'">Guardar</button>
+                </div>
+            </form>
+        </div>
+
+        <th:block th:unless="${nueva}">
+
+            <!-- Buscar y agregar materias -->
+            <div class="card bloque-form">
+                <h3>Agregar materia a la malla</h3>
+                <p class="nota">Busca una materia que ya exista (por código o nombre) o crea una nueva.</p>
+
+                <div class="barra-herramientas sin-borde">
+                    <form class="buscador" method="get" th:action="@{/admin/mallas/{c}(c=${carrera.codigo})}">
+                        <input type="search" name="q" th:value="${q}" placeholder="Ej: 2015734 o calculo">
+                        <button type="submit">Buscar</button>
+                    </form>
+                    <a class="btn claro" th:href="@{/admin/mallas/{c}/materias/nueva(c=${carrera.codigo})}">+ Crear materia nueva</a>
+                </div>
+
+                <table class="tabla-admin" th:if="${resultados != null and !#lists.isEmpty(resultados)}">
+                    <thead>
+                        <tr><th>Código</th><th>Nombre</th><th>Créditos</th><th>Agregar a la malla</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="m : ${resultados}">
+                            <td th:text="${m.codigo}">2015734</td>
+                            <td th:text="${m.nombre}">Programación</td>
+                            <td th:text="${m.creditos}">3</td>
+                            <td>
+                                <form class="form-inline" method="post"
+                                      th:action="@{/admin/mallas/{c}/materias/agregar(c=${carrera.codigo})}">
+                                    <input type="hidden" name="materiaCodigo" th:value="${m.codigo}">
+                                    <input class="mini" type="number" name="semestre" min="1"
+                                           th:max="${carrera.numSemestres}" placeholder="Sem.">
+                                    <select class="mini" name="tipologia">
+                                        <option value="">Tip.</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="L">L</option>
+                                        <option value="P">P</option>
+                                    </select>
+                                    <button type="submit">Agregar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="nota" th:if="${resultados != null and #lists.isEmpty(resultados)}">
+                    No hay materias con «<span th:text="${q}">texto</span>» que no estén ya en esta malla.
+                    Si no existe, créala con el botón de arriba.
+                </p>
+            </div>
+
+            <!-- Materias por semestre -->
+            <div class="card tabla" th:each="s : ${malla.semestres}">
+                <div class="tabla-header">
+                    <h3 th:text="${s.semestre == 0 ? 'Sin semestre' : 'Semestre ' + s.semestre}">Semestre 1</h3>
+                    <span class="nota" th:text="${s.creditos + ' créditos'}">16 créditos</span>
+                    <a class="btn claro" th:if="${s.semestre != 0}"
+                       th:href="@{/admin/mallas/{c}/materias/nueva(c=${carrera.codigo}, semestre=${s.semestre})}">+ Materia nueva</a>
+                </div>
+                <table class="tabla-admin">
+                    <thead>
+                        <tr>
+                            <th>Código</th><th>Nombre</th><th>Créd.</th><th>Tip.</th>
+                            <th>Prerrequisitos</th><th>Correquisitos</th><th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="m : ${s.materias}">
+                            <td th:text="${m.codigo}">2015734</td>
+                            <td th:text="${m.nombre}">Programación</td>
+                            <td th:text="${m.creditos}">3</td>
+                            <td th:text="${m.tipologia ?: '—'}">C</td>
+                            <td th:text="${#lists.isEmpty(m.prerrequisitos)} ? '—' : ${#strings.listJoin(m.prerrequisitos, ', ')}">—</td>
+                            <td th:text="${#lists.isEmpty(m.correquisitos)} ? '—' : ${#strings.listJoin(m.correquisitos, ', ')}">—</td>
+                            <td>
+                                <div class="acciones">
+                                    <a class="icono" title="Editar materia" aria-label="Editar materia"
+                                       th:href="@{/admin/mallas/{c}/materias/{m}(c=${carrera.codigo}, m=${m.codigo})}">✏️</a>
+                                    <form method="post"
+                                          th:action="@{/admin/mallas/{c}/materias/{m}/quitar(c=${carrera.codigo}, m=${m.codigo})}"
+                                          onsubmit="return confirm('¿Quitar esta materia de la malla? La materia sigue existiendo en el catálogo.');">
+                                        <button type="submit" class="icono peligro"
+                                                title="Quitar de la malla" aria-label="Quitar de la malla">🗑️</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="nota" th:if="${#lists.isEmpty(malla.semestres)}">
+                Esta malla todavía no tiene materias. Búscalas arriba o crea una nueva.
+            </p>
+        </th:block>
+    </main>
+</div>
+</body>
+</html>

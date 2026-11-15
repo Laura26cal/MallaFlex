@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MallaFlex - Estadísticas</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="layout">
+    <aside th:replace="~{fragments :: sidebar('estadisticas')}"></aside>
+
+    <main class="contenido">
+        <header class="top">
+            <div>
+                <h2 class="titulo">Estadísticas</h2>
+                <p class="sub">Un vistazo general al uso de MallaFlex.</p>
+            </div>
+            <div class="user">
+                <div th:replace="~{fragments :: perfil}"></div>
+            </div>
+        </header>
+
+        <div class="kpis">
+            <div class="card kpi"><p class="n" th:text="${resumen.estudiantes}">0</p><p class="t">Estudiantes</p></div>
+            <div class="card kpi"><p class="n" th:text="${resumen.carreras}">0</p><p class="t">Mallas</p></div>
+            <div class="card kpi"><p class="n" th:text="${resumen.materias}">0</p><p class="t">Materias</p></div>
+            <div class="card kpi"><p class="n" th:text="${resumen.registros}">0</p><p class="t">Registros en historias</p></div>
+            <div class="card kpi">
+                <p class="n" th:text="${resumen.promedioNotas != null} ? ${#numbers.formatDecimal(resumen.promedioNotas, 1, 2)} : '—'">0</p>
+                <p class="t">Promedio de notas</p>
+            </div>
+        </div>
+
+        <div class="graficos">
+
+            <div class="card grafico">
+                <h3>Estudiantes por carrera</h3>
+                <div class="fila-barra" th:each="b : ${porCarrera}">
+                    <span class="etq" th:text="${b.etiqueta}" th:title="${b.etiqueta}">Carrera</span>
+                    <div class="pista"><div class="relleno" th:style="'width:' + ${b.porcentaje} + '%'"></div></div>
+                    <span class="val" th:text="${b.valor}">0</span>
+                </div>
+                <p class="vacio" th:if="${#lists.isEmpty(porCarrera)}">Aún no hay estudiantes registrados.</p>
+            </div>
+
+            <div class="card grafico">
+                <h3>Estado de las materias registradas</h3>
+                <div class="apilada" th:unless="${#lists.isEmpty(estados)}">
+                    <div th:each="e : ${estados}" th:class="'seg ' + ${e.etiqueta}"
+                         th:style="'width:' + ${e.porcentaje} + '%'"
+                         th:title="${e.etiqueta + ': ' + e.valor}"></div>
+                </div>
+                <ul class="leyenda-estados">
+                    <li th:each="e : ${estados}">
+                        <span th:class="'punto ' + ${e.etiqueta}"></span>
+                        <span th:text="${#strings.replace(e.etiqueta, '_', ' ') + ' · ' + e.valor + ' (' + e.porcentaje + '%)'}">APROBADA</span>
+                    </li>
+                </ul>
+                <p class="vacio" th:if="${#lists.isEmpty(estados)}">Aún no hay materias registradas.</p>
+            </div>
+
+            <div class="card grafico">
+                <h3>Materias más perdidas</h3>
+                <div class="fila-barra" th:each="b : ${masPerdidas}">
+                    <span class="etq" th:text="${b.etiqueta}" th:title="${b.etiqueta}">Materia</span>
+                    <div class="pista"><div class="relleno" th:style="'width:' + ${b.porcentaje} + '%'"></div></div>
+                    <span class="val" th:text="${b.valor}">0</span>
+                </div>
+                <p class="vacio" th:if="${#lists.isEmpty(masPerdidas)}">Todavía no hay materias perdidas.</p>
+            </div>
+
+            <div class="card grafico">
+                <h3>Materias más registradas</h3>
+                <div class="fila-barra" th:each="b : ${masCursadas}">
+                    <span class="etq" th:text="${b.etiqueta}" th:title="${b.etiqueta}">Materia</span>
+                    <div class="pista"><div class="relleno" th:style="'width:' + ${b.porcentaje} + '%'"></div></div>
+                    <span class="val" th:text="${b.valor}">0</span>
+                </div>
+                <p class="vacio" th:if="${#lists.isEmpty(masCursadas)}">Aún no hay registros.</p>
+            </div>
+
+            <div class="card grafico">
+                <h3>Materias por malla</h3>
+                <div class="fila-barra" th:each="b : ${materiasPorMalla}">
+                    <span class="etq" th:text="${b.etiqueta}" th:title="${b.etiqueta}">Malla</span>
+                    <div class="pista"><div class="relleno" th:style="'width:' + ${b.porcentaje} + '%'"></div></div>
+                    <span class="val" th:text="${b.valor}">0</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+</body>
+</html>

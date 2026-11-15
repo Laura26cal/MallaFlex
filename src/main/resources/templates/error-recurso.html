@@ -7,15 +7,7 @@
 </head>
 <body>
     <div class="layout">
-        <aside class="sidebar">
-            <h1>Malla<span>Flex</span></h1>
-            <nav>
-                <a th:href="@{/}">Inicio</a>
-                <a th:href="@{/ruta}">Ruta óptima</a>
-                <a th:href="@{/malla}">Malla curricular</a>
-                <a th:href="@{/historia}">Historia académica</a>
-            </nav>
-        </aside>
+        <aside th:replace="~{fragments :: sidebar('inicio')}"></aside>
 
         <main class="contenido">
             <div class="card error404">

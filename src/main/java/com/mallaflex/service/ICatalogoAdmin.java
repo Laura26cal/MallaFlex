@@ -35,4 +35,20 @@ public interface ICatalogoAdmin {
                                 Integer semestreSugerido, boolean requiereMallaCompleta);
 
     void quitarMateriaDeCarrera(String carreraCodigo, String materiaCodigo);
+
+    
+
+    void actualizarMateriaEnCarrera(String carreraCodigo, String materiaCodigo, String tipologia,
+                            Integer semestreSugerido, boolean requiereMallaCompleta);
+
+    void crearMateriaEnMalla(String carreraCodigo, Materia materia, List<String> prerrequisitos,
+                             List<String> correquisitos, String tipologia, Integer semestreSugerido,
+                             boolean requiereMallaCompleta);
+
+    void guardarMateriaEnMalla(String carreraCodigo, Materia materia, String tipologia,
+                            Integer semestreSugerido, boolean requiereMallaCompleta,
+                            List<String> prerrequisitos, List<String> correquisitos);
+
+
+
 }

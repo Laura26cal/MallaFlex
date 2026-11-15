@@ -9,27 +9,22 @@
 
     <div class="layout">
 
-        <aside class="sidebar">
-            <h1>Malla<span>Flex</span></h1>
-
-            <nav>
-                <a th:href="@{/}">Inicio</a>
-                <a th:href="@{/ruta}" class="activo">Ruta óptima</a>
-                <a th:href="@{/malla}">Malla curricular</a>
-                <a th:href="@{/historia}">Historia académica</a>
-            </nav>
-            <div class="sesion">
-                <p th:if="${usuario != null}" th:text="${usuario.nombre}">Nombre</p>
-                <form th:if="${usuario != null}" th:action="@{/logout}" method="post">
-                    <button type="submit">Cerrar sesión</button>
-                </form>
-                <a th:if="${usuario == null}" th:href="@{/login}">Iniciar sesión</a>
-            </div>
-        </aside>
+        <aside th:replace="~{fragments :: sidebar('inicio')}"></aside>
 
         <main class="contenido">
-            <h2 class="titulo">Tu ruta de inscripción</h2>
-            <p class="sub">Empieza con la ruta recomendada; puedes aceptarla o mover materias de semestre.</p>
+
+            <header class="top">
+                <div>
+                    <h2 class="titulo">Tu ruta de inscripción</h2>
+            
+                </div>
+                <div class="user">
+                    <div th:replace="~{fragments :: perfil}"></div>
+                </div>
+            </header>
+
+
+            
         </main>
 
     </div>

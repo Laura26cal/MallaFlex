@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <aside class="sidebar" th:fragment="sidebar(activo)">
+        <h1>Malla<span>Flex</span></h1>
+
+        <!-- Menú del administrador -->
+        <nav th:if="${esAdmin}">
+            <a th:href="@{/admin/mallas}" th:classappend="${activo == 'mallas'} ? 'activo'">Mallas y materias</a>
+            <a th:href="@{/admin/estadisticas}" th:classappend="${activo == 'estadisticas'} ? 'activo'">Estadísticas</a>
+        </nav>
+
+        <!-- Menú del estudiante -->
+        <nav th:unless="${esAdmin}">
+            <a th:href="@{/}" th:classappend="${activo == 'inicio'} ? 'activo'">Inicio</a>
+            <a th:href="@{/ruta}" th:classappend="${activo == 'ruta'} ? 'activo'">Ruta óptima</a>
+            <a th:href="@{/malla}" th:classappend="${activo == 'malla'} ? 'activo'">Malla curricular</a>
+            <a th:href="@{/historia}" th:classappend="${activo == 'historia'} ? 'activo'">Historia académica</a>
+        </nav>
+    </aside>
+
+    <!-- Círculo de perfil: botón con datos básicos y cerrar sesión -->
+    <div class="perfil" th:fragment="perfil">
+        <a th:if="${usuario == null}" th:href="@{/login}" class="btn-login">Iniciar sesión</a>
+
+        <th:block th:if="${usuario != null}">
+            <button type="button" class="avatar" id="btn-perfil"
+                    aria-haspopup="true" aria-expanded="false" aria-controls="menu-perfil"
+                    th:text="${#strings.toUpperCase(#strings.substring(usuario.nombre, 0, 1))}">L</button>
+
+            <div class="menu-perfil" id="menu-perfil" hidden>
+                <div class="menu-datos">
+                    <strong th:text="${usuario.nombre}">Nombre</strong>
+                    <span th:text="${usuario.correo}">correo@unal.edu.co</span>
+                    <span class="rol" th:text="${esAdmin} ? 'Administrador' : 'Estudiante'">Estudiante</span>
+                    <span th:if="${usuario.carreraCodigo != null}" th:text="'Carrera: ' + ${usuario.carreraCodigo}">Carrera: 2A74</span>
+                </div>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit">Cerrar sesión</button>
+                </form>
+            </div>
+
+            <script>
+                (function () {
+                    var btn = document.getElementById('btn-perfil');
+                    var menu = document.getElementById('menu-perfil');
+                    function cerrar() { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); }
+                    btn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        var abrir = menu.hidden;
+                        menu.hidden = !abrir;
+                        btn.setAttribute('aria-expanded', abrir ? 'true' : 'false');
+                    });
+                    document.addEventListener('click', function (e) {
+                        if (!menu.contains(e.target)) cerrar();
+                    });
+                    document.addEventListener('keydown', function (e) {
+                        if (e.key === 'Escape') cerrar();
+                    });
+                })();
+            </script>
+        </th:block>
+    </div>
+
+</body>
+</html>

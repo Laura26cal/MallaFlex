@@ -81,4 +81,11 @@ public class MallaRepository {
         String sql = "SELECT correquisito_codigo FROM correquisito WHERE materia_codigo = ?";
         return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("correquisito_codigo"), materiaCodigo);
     }
+
+    public boolean updateMateria(String carreraCodigo, String materiaCodigo, String tipologia, Integer semestreSugerido, boolean requiereMallaCompleta) {
+        String sql = "UPDATE carrera_materia SET tipologia = ?, semestre_sugerido = ?, "+ "requiere_malla_completa = ? WHERE carrera_codigo = ? AND materia_codigo = ?";
+        return jdbcTemplate.update(sql, tipologia, semestreSugerido, requiereMallaCompleta ? 1 : 0, carreraCodigo, materiaCodigo) > 0;
+    }
+
+
 }
