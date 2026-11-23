@@ -13,8 +13,6 @@ Java 21 y SQLite.
 - Java 21
 - Git
 
-No hay que instalar Maven ni la base de datos (el proyecto trae Maven Wrapper y SQLite viene embebida).
-
 ## Usuarios de prueba
 
 | Rol | Correo | Contraseña |
